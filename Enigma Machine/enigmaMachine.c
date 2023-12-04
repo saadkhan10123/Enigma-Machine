@@ -1,6 +1,6 @@
 /*
 	Muhammad Saad Khan 
-	Ali Ahmed
+	Ali Ahmad
 	28-11-2023
 	Enigma Machine
 */
