@@ -19,6 +19,7 @@ typedef struct {
 
 void rotateRotor(int *rotor);
 void printArray(int arr[], int size) {
+	// This function prints an array
 	for (int i = 0; i < size; i++) {
 		printf("%2d ", arr[i]);
 	}
@@ -26,14 +27,17 @@ void printArray(int arr[], int size) {
 }
 
 int convertToIndex(char c) {
+	// This function converts a character to an index
 	return (int)c - 97;
 }
 
 char convertToChar(int i) {
+	// This function converts an index to a character
 	return (char)(i + 97);
 }
 
 void printString(char* str) {
+	// This function prints a string
 	for (int i = 0; i < strlen(str); i++) {
 		printf("%c", str[i]);
 	}
@@ -41,6 +45,7 @@ void printString(char* str) {
 }
 
 int findIndex(int arr[], int value) {
+	// This function finds the index of a value in an array
 	for (int i = 0; i < 26; i++) {
 		if (arr[i] == value) {
 			return i;
@@ -58,8 +63,7 @@ void makeRandomString(char* str, int length) {
 }
 
 void initializeRotorSettings(Settings* settings) {
-	// Initialize rotor positions to 0
-
+	// Initialize rotors used
 	int rotorsUsedSettings[3] = { 0, 1, 2 };
 
 	for (int i = 0; i < 3; i++) {
@@ -80,6 +84,7 @@ void initializeRotorSettings(Settings* settings) {
 		}
 	}
 
+	// Rotate rotors to the correct position
 	int rotorPositionsSettings[3] = { 0, 0, 0 };
 	for (int i = 0; i < 3; i++) {
 		for(int j = 0; j < rotorPositionsSettings[i]; j++) {
@@ -94,7 +99,7 @@ void initializeRotorSettings(Settings* settings) {
 	}
 
 	// Initialize plugboard
-	// This contains reflexive pairs of numbers
+	// This contains pairs of numbers which are non-repeating
 	int plugBoardSettings[10][2] = { {0, 1}, {2, 3}, {4, 5}, {6, 7}, {8, 9}, {10, 11}, {12, 13}, {14, 15}, {16, 17}, {18, 19} };
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 2; j++) {
@@ -104,17 +109,20 @@ void initializeRotorSettings(Settings* settings) {
 }
 
 int putThroughRotor(Settings* settings, int rotorNumber, int index) {
+	// This function puts a value through a rotor
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
 	return settings->rotors[rotorUsed][index];
 }
 
 int decryptThroughRotor(Settings* settings, int rotorNumber, int index) {
+	// This function puts a value through a rotor to decrypt it
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
 	int rotorIndex = findIndex(settings->rotors[rotorUsed], index);
 	return rotorIndex;
 }
 
 void rotateRotor(int *rotor) {
+	// This function rotates a single rotor
 	int temp = rotor[0];
 	for (int i = 0; i < 25; i++) {
 		rotor[i] = rotor[i + 1];
@@ -123,6 +131,7 @@ void rotateRotor(int *rotor) {
 }
 
 void rotateRotors(Settings* settings, int rotationNumber) {
+	// This function rotates all the rotors
 	rotateRotor(settings->rotors[settings->rotorsUsed[0]]);
 	if (rotationNumber % 26 == 0) {
 		rotateRotor(settings->rotors[settings->rotorsUsed[1]]);
@@ -133,10 +142,12 @@ void rotateRotors(Settings* settings, int rotationNumber) {
 }
 
 int putThroughReflector(Settings* settings, int index) {
+	// This function puts a value through the reflector
 	return settings->reflector[index];
 }
 
 int putThroughPlugBoard(Settings* settings, int index) {
+	// This function puts a value through the plugboard
 	for (int i = 0; i < 10; i++) {
 		if (settings->plugBoard[i][0] == index) {
 			return settings->plugBoard[i][1];
@@ -154,20 +165,28 @@ void encrypt(Settings* settings, char* str, char* output) {
 		int index = convertToIndex(str[i]);
 		int j;
 
+		// Put through plugboard
 		index = putThroughPlugBoard(settings, index);
 
+		// Put through rotors
 		for (j = 0; j < 3; j++) {
 			index = putThroughRotor(settings, j, index);
 		}
 
+		// Put through reflector
 		index = putThroughReflector(settings, index);
 
+		// Put through rotors again
 		for (j = 2; j >= 0; j--) {
 			index = putThroughRotor(settings, j, index);
 		}
+		// Rotate rotors
 		rotateRotors(settings, i);
+
+		// Put through plugboard again
 		index = putThroughPlugBoard(settings, index);
 
+		// Convert the output to a character and store it in the output string
 		output[i] = convertToChar(index);
 	}
 	output[strlen(str)] = '\0';
@@ -179,40 +198,49 @@ void decrypt (Settings* settings, char* str, char* output) {
 		int index = convertToIndex(str[i]);
 		int j;
 
+		// Put through plugboard
 		index = putThroughPlugBoard(settings, index);
 
+		// Put through rotors to decrypt
 		for (j = 0; j < 3; j++) {
 			index = decryptThroughRotor(settings, j, index);
 		}
 
+		// Put through reflector
 		index = putThroughReflector(settings, index);
 
+		// Put through rotors again to decrypt
 		for (j = 2; j >= 0; j--) {
 			index = decryptThroughRotor(settings, j, index);
 		}
+		// Rotate rotors
 		rotateRotors(settings, i);
+
+		// Put through plugboard again
 		index = putThroughPlugBoard(settings, index);
 
+		// Convert the output to a character and store it in the output string
 		output[i] = convertToChar(index);
 	}
 	output[strlen(str)] = '\0';
 }
 
 void test() {
+	// This is a test function to test the enigma machine
+	/*Settings* settings = malloc(sizeof(Settings));
+	initializeRotorSettings(settings);*/
 
-		/*Settings* settings = malloc(sizeof(Settings));
-		initializeRotorSettings(settings);*/
+	/*printf("First rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[0]], 26);
+	printf("-------------------- \n");
+	printf("Second rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[1]], 26);
+	printf("-------------------- \n\n");
+	printf("Third rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[2]], 26);
+	printf("-------------------- \n\n");*/
 
-		/*printf("First rotor: \n");
-		printArray(settings->rotors[settings->rotorsUsed[0]], 26);
-		printf("-------------------- \n");
-		printf("Second rotor: \n");
-		printArray(settings->rotors[settings->rotorsUsed[1]], 26);
-		printf("-------------------- \n\n");
-		printf("Third rotor: \n");
-		printArray(settings->rotors[settings->rotorsUsed[2]], 26);
-		printf("-------------------- \n\n");*/
-
+	// Test the encrypt and decrypt functions with a rendomly generated string
 	for (int i = 0; i < 100000; i++) {
 		Settings* settings = malloc(sizeof(Settings));
 		initializeRotorSettings(settings);
@@ -277,6 +305,8 @@ void test() {
 int main(void) {
 	srand(time(NULL));
 
+	// Comment this out to test the enigma machine with a randomly generated string
+	// Uncomment this to test the enigma machine with a string entered by the user
 	/*Settings *settings = malloc(sizeof(Settings));
 	initializeRotorSettings(settings);
 
@@ -298,6 +328,7 @@ int main(void) {
 	printf("Decrypted string: ");
 	printString(decryptOutput);*/
 
+	// Comment the test() function to test the enigma machine with a string entered by the user
 	test();
 	return 0;
 }
