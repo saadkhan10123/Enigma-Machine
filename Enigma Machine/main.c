@@ -147,8 +147,10 @@ void createPairs(string* plug, string plugPair[10][2]) {
 
 	// Split plugs into pairs of 2
 	for (int i = 0; i < strlen(plug) / 2; i++) {
-		plugPair[i][0] = plug[2 * i];
-		plugPair[i][1] = plug[(2 * i) + 1];
+		for (int j = 0; j < 2; j++) {
+			plugPair[i][j] = plug[(2 * i) + j];
+
+		}
 	}
 }
 
