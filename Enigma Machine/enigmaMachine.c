@@ -18,6 +18,146 @@ typedef struct {
 } Settings;
 
 void rotateRotor(int *rotor);
+int convertToIndex(char c);
+void uppercase(char* text);
+
+void inputRotorsUsed(int rotor[]) {
+	// This function takes input from user and sets the rotors used
+	printf("Set Rotor Configuration\n");
+
+	for (int i = 0; i < 3; i++) {
+		printf("Rotor %d: ", i + 1);
+		scanf_s("%d", &rotor[i]);
+		rotor[i]--; // Convert to index [0, 4]
+
+		if (rotor[i] < 0 || rotor[i] > 4) {
+			printf("Enter a Valid Number\n");
+			i--;
+			continue;
+		}
+
+		for (int j = 0; j < i; j++) {
+			if (rotor[i] == rotor[j]) {
+				printf("Enter a Distinct Number\n");
+				i--;
+			}
+		}
+	}
+}
+
+void inputRotorPositions(int position[]) {
+	printf("\nSet Rotor Positions\n");
+
+	for (int i = 0; i < 3; i++) {
+		printf("Position Rotor %d: ", i + 1);
+		scanf_s("%d", &position[i]);
+
+		if (position[i] < 1 || position[i] > 26) {
+			printf("Enter a Valid Number\n");
+			i--;
+			continue;
+		}
+	}
+}
+
+void createPairs(char* plug, Settings *settings) {
+	// Split plugs into pairs of 2
+	for (int i = 0; i < strlen(plug) / 2; i++) {
+		settings->plugBoard[i][0] = convertToIndex(plug[2 * i]);
+		settings->plugBoard[i][1] = convertToIndex(plug[(2 * i) + 1]);
+	}
+}
+
+void inputPlugs(Settings *settings) {
+	int n = 0;
+	char plug[20];
+	do {
+		printf("\nSet Plug Configurations: ");
+		scanf_s("%s", plug, 20);
+
+		for (int i = 0; i < strlen(plug); i++) {
+
+			// Invalid Input
+			if (plug[i] < 'A' || plug[i] > 'z') {
+				continue;
+			}
+
+			// Add number of valid plugs if no invalid input
+			else {
+				n++;
+			}
+
+			for (int j = i + 1; j < strlen(plug); j++) {
+				if (plug[i] == plug[j]) {
+					n--; // Decrease no. of valid plugs by 1
+				}
+			}
+		}
+
+		// Error messages
+		if (n < strlen(plug)) {
+			printf("Enter a Valid Configuration\n");
+		}
+
+		if (strlen(plug) % 2 != 0) {
+			printf("Plugs Should be in Pairs of 2\n");
+		}
+
+		/*
+			Two conditions are checked for valid input of plugs:
+
+			1. No plug is invalid
+			2. Number of plugs should be a multiple of 2
+		*/
+
+	} while (n < strlen(plug) || strlen(plug) % 2 != 0);
+
+	uppercase(plug); // Convert all characters to uppercase)
+	createPairs(plug, settings);
+}
+
+void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
+	// Print out the encryption key
+	printf("Key: ");
+
+	//Print Rotors
+	for (int i = 0; i < 3; i++) {
+		printf("%d", rotor[i] + 1);
+	}
+
+	// Print Positions
+	for (int i = 0; i < 3; i++) {
+		if (position[i] < 10) {
+			printf("0%d", position[i]);
+		}
+
+		else {
+			printf("%d", position[i]);
+		}
+	}
+
+	// Print Plugs
+	for (int i = 0; i < strlen(plug) / 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			printf("%c", plugPair[i][j]);
+
+		}
+	}
+}
+
+void uppercase(char* text) {
+	for (int i = 0; i < strlen(text); i++) {
+		// Change lowercase to uppercase
+		if (text[i] >= 'a' && text[i] <= 'z') {
+			text[i] -= ' ';
+		}
+
+		else {
+			continue;
+		}
+	}
+}
+
 void printArray(int arr[], int size) {
 	// This function prints an array
 	for (int i = 0; i < size; i++) {
@@ -64,7 +204,9 @@ void makeRandomString(char* str, int length) {
 
 void initializeRotorSettings(Settings* settings) {
 	// Initialize rotors used
-	int rotorsUsedSettings[3] = { 0, 1, 2 };
+	int rotorsUsedSettings[3] = { 0 };
+	inputRotorsUsed(rotorsUsedSettings);
+	printArray(rotorsUsedSettings, 3);
 
 	for (int i = 0; i < 3; i++) {
 		settings->rotorsUsed[i] = rotorsUsedSettings[i];
@@ -85,12 +227,24 @@ void initializeRotorSettings(Settings* settings) {
 	}
 
 	// Rotate rotors to the correct position
-	int rotorPositionsSettings[3] = { 0, 0, 0 };
+	int rotorPositionsSettings[3] = { 0 };
+	inputRotorPositions(rotorPositionsSettings);
+
+
 	for (int i = 0; i < 3; i++) {
 		for(int j = 0; j < rotorPositionsSettings[i]; j++) {
 			rotateRotor(settings->rotors[settings->rotorsUsed[i]]);
 		}
 	}
+	printf("First rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[0]], 26);
+	printf("-------------------- \n");
+	printf("Second rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[1]], 26);
+	printf("-------------------- \n\n");
+	printf("Third rotor: \n");
+	printArray(settings->rotors[settings->rotorsUsed[2]], 26);
+	printf("-------------------- \n\n");
 
 	// Initialize reflector
 	int reflectorSettings[26] = { 24, 17, 20, 7, 16, 18, 11, 3, 15, 23, 13, 6, 14, 10, 12, 8, 4, 1, 5, 25, 2, 22, 21, 9, 0, 19 };
@@ -100,12 +254,7 @@ void initializeRotorSettings(Settings* settings) {
 
 	// Initialize plugboard
 	// This contains pairs of numbers which are non-repeating
-	int plugBoardSettings[10][2] = { {0, 1}, {2, 3}, {4, 5}, {6, 7}, {8, 9}, {10, 11}, {12, 13}, {14, 15}, {16, 17}, {18, 19} };
-	for (int i = 0; i < 10; i++) {
-		for (int j = 0; j < 2; j++) {
-			settings->plugBoard[i][j] = plugBoardSettings[i][j];
-		}
-	}
+	inputPlugs(settings);
 }
 
 int putThroughRotor(Settings* settings, int rotorNumber, int index) {
