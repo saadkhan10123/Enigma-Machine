@@ -17,12 +17,18 @@ void uppercase(string*);
 void createPairs(string*, string[10][2]);
 void printKey(int[], int[], string*, string[10][2]);
 
+/*
+Enigma Machine | Encryption/Decryption Key Input
+End Semester Project
+Ali Ahmad | Saad Khan
+*/
 int main() {
 	// Arrays in the key
 	int rotors[3];
 	int positions[3];
-	
 	string plugs[21] = "";
+
+	// Plugs in pairs of 2
 	string plugPairs[10][2];
 
 	int count = 0; // Indicates no. of valid plugs
@@ -49,18 +55,19 @@ int main() {
 void machineRotors(int rotor[])
 {
 	printf("Set Rotor Configuration\n");
-
+	// Get input for rotors
 	for (int i = 0; i < 3; i++) {
 		printf("Rotor %d: ", i + 1);
 		scanf("%d", &rotor[i]);
 
+		// Check for valid input
 		if (rotor[i] < 1 || rotor[i] > 5) {
 			printf("Enter a Valid Number\n");
 			i--;
 
 			continue;
 		}
-
+		// Check for repitition
 		if (i != 0 && rotor[i] == rotor[i - 1]) {
 			printf("Enter Distinct Values\n");
 			i--;
@@ -74,11 +81,12 @@ void machineRotors(int rotor[])
 void rotorPositions(int position[]) 
 {	
 	printf("\nSet Rotor Positions\n");
-	
+	// Get input for positions
 	for (int i = 0; i < 3; i++) {
 		printf("Position Rotor %d: ", i + 1);
 		scanf("%d", &position[i]);
 
+		// Check for valid input
 		if (position[i] < 1 || position[i] > 26) {
 			printf("Enter a Valid Number\n");
 			i--;
@@ -91,6 +99,7 @@ void IOPlugs(string* plug, int n)
 {
 	do
 	{
+		// Get input for plugs
 		printf("\nSet Plug Configurations: ");
 		scanf("%s", plug);
 
@@ -100,12 +109,12 @@ void IOPlugs(string* plug, int n)
 			if (plug[i] < 'A' || plug[i] > 'z') {
 				continue;
 			}
-
 			// Add no. of valid plugs if no invalid input
 			else {
 				n++;
 			}
 
+			// Check for repitition
 			for (int j = i + 1; j < strlen(plug); j++) {
 				if (plug[i] == plug[j]) {
 					n--; // Decrease no. of valid plugs by 1
@@ -116,11 +125,11 @@ void IOPlugs(string* plug, int n)
 
 		// Error messages
 		if (n < strlen(plug)) {
-			printf("Enter a Valid Configuration\n");
+			printf("Enter a Valid Configuration\n"); 
 		}
 
 		if (strlen(plug) % 2 != 0) {
-			printf("Plugs Should be in Pairs of 2\n");
+			printf("Plugs Should be in Pairs of 2\n"); 
 		}
 
 		/*
@@ -136,11 +145,12 @@ void IOPlugs(string* plug, int n)
 
 void createPairs(string* plug, string plugPair[10][2]) {
 
-
 	// Split plugs into pairs of 2
 	for (int i = 0; i < strlen(plug) / 2; i++) {
-		plugPair[i][0] = plug[2 * i];
-		plugPair[i][1] = plug[(2 * i) + 1];
+		for (int j = 0; j < 2; j++) {
+			plugPair[i][j] = plug[(2 * i) + j];
+
+		}
 	}
 }
 
@@ -156,6 +166,7 @@ void printKey(int rotor[], int position[], string* plug, string plugPair[10][2])
 
 	// Print Positions
 	for (int i = 0; i < 3; i++) {
+		// Make sure position is in double digits
 		if (position[i] < 10) {
 			printf("0%d", position[i]);
 		}
@@ -180,7 +191,7 @@ void uppercase(string* text)
 		
 		// Change lowercase to uppercase
 		if (text[i] >= 'a' && text[i] <= 'z') {
-			text[i] -= ' ';
+			text[i] -= ' '; // Subtract ASCII value of ' ' to convert to uppercase
 		}
 
 		else {
