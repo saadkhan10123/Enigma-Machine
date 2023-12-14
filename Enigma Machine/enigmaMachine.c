@@ -51,8 +51,9 @@ void inputRotorPositions(int position[]) {
 	for (int i = 0; i < 3; i++) {
 		printf("Position Rotor %d: ", i + 1);
 		scanf_s("%d", &position[i]);
+		position[i]--;
 
-		if (position[i] < 1 || position[i] > 26) {
+		if (position[i] < 0 || position[i] > 25) {
 			printf("Enter a Valid Number\n");
 			i--;
 			continue;
@@ -114,6 +115,44 @@ void inputPlugs(Settings *settings) {
 
 	uppercase(plug); // Convert all characters to uppercase)
 	createPairs(plug, settings);
+}
+
+// Function to generate random values for rotor, position, and plug arrays
+void randomKey(int rotor[3], int position[3], string plug[21]) {
+	srand((unsigned)time(NULL));
+
+	// Generate random values for rotor 
+	for (int i = 0; i < 3; i++) {
+		rotor[i] = rand() % 5;  // Values between 0 and 4
+
+		// Check for repetition
+		for (int j = 0; j < i; ++j) {
+			if (rotor[i] == rotor[j]) {
+
+				--i;
+				break;
+			}
+		}
+	}
+
+	// Generate random values for position 
+	for (int i = 0; i < 3; i++) {
+		position[i] = (rand() % 26);  // Values between 0 and 25
+	}
+
+	// Generate random values for plug 
+	for (int i = 0; i < 20; i++) {
+		plug[i] = 'A' + (rand() % 26);  // Random capital letter
+
+		// Check for repetition
+		for (int j = 0; j < i; j++) {
+			if (plug[i] == plug[j]) {
+			
+				--i;
+				break;
+			}
+		}
+	}
 }
 
 void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
