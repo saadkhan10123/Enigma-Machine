@@ -118,7 +118,7 @@ void inputPlugs(Settings *settings) {
 }
 
 // Function to generate random values for rotor, position, and plug arrays
-void randomKey(int rotor[3], int position[3], string plug[21]) {
+void randomKey(int rotor[3], int position[3], char plug[21]) {
 	srand((unsigned)time(NULL));
 
 	// Generate random values for rotor 
