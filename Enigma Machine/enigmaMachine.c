@@ -155,6 +155,115 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 	}
 }
 
+// Get key directly from user
+void directKeyInput(int rotor[3], int position[3], char plug[21]) {
+
+	string key[30] = " ";
+
+	// Conditions to check validity of key
+	bool keyValid = true;
+
+	do
+	{
+		// Get user input
+		printf("Enter the Encryption Key: ");
+		scanf("%s", key);
+
+		uppercase(key);
+
+		bool rotorsValid = true;
+		// Validity of rotors in the key
+		for (int i = 0; i < 3; i++) {
+			// Rotors used between 1 and 5
+			if (!(key[i] >= '1' && key[i] <= '5')) {
+				rotorsValid = false;
+				break;
+			}
+
+			// Check for repetition
+			if (key[i] == key[i + 1]) {
+
+				rotorsValid = false; // Not valid if rotors used are repeated
+				break;
+			}
+		}
+
+		bool positionsValid = true;
+		// Validity of positions in the key
+		for (int i = 3; i < 9; i++) {
+			// Rotor position between 00 and 25
+			if (!(key[i] >= '0' && key[i] <= '2' && key[i + 1] >= '0' && key[i + 1] <= '9')) {
+		
+				positionsValid = false;
+				break;
+			}
+			i++; // Skip the second digit of the two-digit number
+		}
+
+		bool plugsValid = true;
+		// Validity of plugs in the key
+		for (int i = 9; i < strlen(key); i++) {
+			// Plugs between A and Z
+			if (!(key[i] >= 'A' && key[i] <= 'Z')) {
+				plugsValid = false;
+				break;
+			}
+
+			// Check for repetition
+			if (key[i] == key[i + 1]) {
+
+				plugsValid = false; // Not valid if plugs are repeated
+				break;
+			}
+		}
+
+		keyValid = rotorsValid && positionsValid && plugsValid;
+
+		// Check if plugs are in pairs
+		if (strlen(key) % 2 == 0) {
+			keyValid = false;
+		}
+
+		// Display message for success or failure
+		if (keyValid) {
+			printf("\nKey Entered Successfully!");
+		}
+		else
+		{
+			printf("\nEncryption Key is Invalid");
+		}
+
+		printf("\n");
+
+		// Get values for rotors used
+		for (int i = 0; i < 3; i++) {
+			rotor[i] = (int)(key[i]) - '1'; // Values between 0 and 5
+		}
+
+		// Get values for rotor position
+		for (int i = 3, j = 0; i < 9; i += 2, j++) {
+
+			// Extract two digits from the string and convert them to an integer
+			int number = (key[i] - '0') * 10 + (key[i + 1] - '0');
+
+			// Assign the extracted number to the array
+			position[j] = number; // Values Between 0 and 25
+		}
+
+		// Get values for plugs connected
+		for (int i = 0, j = 0; key[i] != '\0'; i++) {
+			
+			// Check for alphabets (plugs)
+			if (isalpha(key[i])) {
+				plug[j] = key[i]; // Assign value to plug
+				j++;
+			}
+		}
+
+	} while (!keyValid);
+
+}
+
 void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
 	// Print out the encryption key
 	printf("Key: ");
