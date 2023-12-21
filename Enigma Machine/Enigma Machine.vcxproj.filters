@@ -18,5 +18,20 @@
     <ClCompile Include="enigmaMachine.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="supportFunctions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="encrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="decrypt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="key.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="working.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

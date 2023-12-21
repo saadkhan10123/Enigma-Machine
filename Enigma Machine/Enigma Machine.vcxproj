@@ -127,7 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="decrypt.c" />
+    <ClCompile Include="encrypt.c" />
     <ClCompile Include="enigmaMachine.c" />
+    <ClCompile Include="key.c" />
+    <ClCompile Include="supportFunctions.c" />
+    <ClCompile Include="working.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
