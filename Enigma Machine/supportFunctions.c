@@ -55,6 +55,73 @@ void printString(char* str) {
 	printf("\n");
 }
 
+/*
+	This function will get input for user
+	to determine how the key will be generated
+*/
+int configurationType() 
+{
+
+	int option = 1;
+	printf(GREEN"-Choose Configuration Type-\n\n"COLOR_RESET);
+	
+	// Prompt user to input value
+	for (;;) {
+		
+
+		// Check for arrow key input
+		// Right or up
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
+			option++;
+			Sleep(150);
+		}
+
+		// Left or down
+		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
+			option--;
+			Sleep(150);
+		}
+
+		// Keep an arrow over the option currently selected
+		switch (option)
+		{
+		case 1:
+			printf(CYAN"\r> Manual Configuration    Randomly Generated Key    Enter Pre-Existing Key"COLOR_RESET);
+			break;
+
+		case 2:
+			printf(CYAN"\rManual Configuration    > Randomly Generated Key    Enter Pre-Existing Key"COLOR_RESET);
+			break;
+
+		case 3:
+			printf(CYAN"\rManual Configuration    Randomly Generated Key    > Enter Pre-Existing Key"COLOR_RESET);
+
+		default:
+
+			// Make sure options within range
+			if (option > 3) {
+				option = 1;
+			}
+
+			if (option < 1) {
+				option = 3;
+			}
+
+			break;
+		}
+
+		// Break out of the loop when enter key is pressed
+		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			Sleep(250);
+			break;
+		}
+	}
+
+	system("cls");
+
+	return option;
+}
+
 // Print out the encryption key
 void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
 
