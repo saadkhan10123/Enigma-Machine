@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include "Settings.h"
 
 #pragma warning(disable:4996)
 
