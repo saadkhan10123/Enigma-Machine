@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#pragma warning(disable : 4996)
+#pragma warning(disable:4996)
+
+// Colored Text
+#define GREEN "\033[1;92m"
+#define RED "\033[1;91m"
+#define CYAN "\033[1;96m" 
+#define YELLOW "\033[1;93m" 
+
+// Reset Color
+#define COLOR_RESET "\033[0m"
 
 typedef struct {
 	int rotors[5][26];
@@ -12,6 +21,7 @@ typedef struct {
 } Settings;
 
 void inputRotorsUsed(int rotor[]) {
+	printf(YELLOW);
 	// This function takes input from user and sets the rotors used
 	printf("Set Rotor Configuration\n");
 
@@ -33,9 +43,11 @@ void inputRotorsUsed(int rotor[]) {
 			}
 		}
 	}
+	printf(COLOR_RESET);
 }
 
 void inputRotorPositions(int position[]) {
+	printf(YELLOW);
 	printf("\nSet Rotor Positions\n");
 
 	for (int i = 0; i < 3; i++) {
@@ -49,6 +61,7 @@ void inputRotorPositions(int position[]) {
 			continue;
 		}
 	}
+	printf(COLOR_RESET);
 }
 
 void createPairs(char* plug, Settings* settings) {
@@ -60,6 +73,8 @@ void createPairs(char* plug, Settings* settings) {
 }
 
 void inputPlugs(Settings* settings) {
+	printf(YELLOW);
+	
 	int n = 0;
 	char plug[20];
 	do {
@@ -102,6 +117,7 @@ void inputPlugs(Settings* settings) {
 		*/
 
 	} while (n < strlen(plug) || strlen(plug) % 2 != 0);
+	printf(COLOR_RESET);
 
 	uppercase(plug); // Convert all characters to uppercase)
 	createPairs(plug, settings);
@@ -119,7 +135,7 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 		for (int j = 0; j < i; ++j) {
 			if (rotor[i] == rotor[j]) {
 
-				--i;
+				i--;
 				break;
 			}
 		}
@@ -138,7 +154,7 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 		for (int j = 0; j < i; j++) {
 			if (plug[i] == plug[j]) {
 
-				--i;
+				i--;
 				break;
 			}
 		}

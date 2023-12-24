@@ -5,6 +5,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <Windows.h>
+
+// Colored Text
+#define GREEN "\033[1;92m"
+#define RED "\033[1;91m"
+#define CYAN "\033[1;96m" 
+#define YELLOW "\033[1;93m" 
+
+// Reset Color
+#define COLOR_RESET "\033[0m"
 
 void printArray(int arr[], int size) {
 	// This function prints an array
@@ -45,33 +55,107 @@ void printString(char* str) {
 	printf("\n");
 }
 
+/*
+	This function will get input for user
+	to determine how the key will be generated
+*/
+int configurationType() 
+{
+
+	int option = 1;
+	printf(GREEN"-Choose Configuration Type-\n\n"COLOR_RESET);
+	
+	// Prompt user to input value
+	for (;;) {
+		
+
+		// Check for arrow key input
+		// Right or up
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
+			option++;
+			Sleep(150);
+		}
+
+		// Left or down
+		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
+			option--;
+			Sleep(150);
+		}
+
+		// Keep an arrow over the option currently selected
+		switch (option)
+		{
+		case 1:
+			printf(CYAN"\r> Manual Configuration    Randomly Generated Key    Enter Pre-Existing Key"COLOR_RESET);
+			break;
+
+		case 2:
+			printf(CYAN"\rManual Configuration    > Randomly Generated Key    Enter Pre-Existing Key"COLOR_RESET);
+			break;
+
+		case 3:
+			printf(CYAN"\rManual Configuration    Randomly Generated Key    > Enter Pre-Existing Key"COLOR_RESET);
+
+		default:
+
+			// Make sure options within range
+			if (option > 3) {
+				option = 1;
+			}
+
+			if (option < 1) {
+				option = 3;
+			}
+
+			break;
+		}
+
+		// Break out of the loop when enter key is pressed
+		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			Sleep(250);
+			break;
+		}
+	}
+
+	system("cls");
+
+	return option;
+}
+
+// Print out the encryption key
 void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
-	// Print out the encryption key
-	printf("Key: ");
+
+	printf(GREEN"-Encryption Key: "COLOR_RESET);
 
 	//Print Rotors
 	for (int i = 0; i < 3; i++) {
-		printf("%d", rotor[i] + 1);
+		printf(GREEN"%d"COLOR_RESET, rotor[i] + 1);
+		Sleep(50);
 	}
 
 	// Print Positions
 	for (int i = 0; i < 3; i++) {
 		if (position[i] < 10) {
-			printf("0%d", position[i]);
+			printf(GREEN"0%d"COLOR_RESET, position[i]);
+			Sleep(50);
 		}
 
 		else {
-			printf("%d", position[i]);
+			printf(GREEN"%d"COLOR_RESET, position[i]);
+			Sleep(50);
 		}
 	}
 
 	// Print Plugs
 	for (int i = 0; i < strlen(plug) / 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			printf("%c", plugPair[i][j]);
-
+			printf(GREEN"%c"COLOR_RESET, plugPair[i][j]);
+			Sleep(50);
+			
 		}
 	}
+
+	printf("\n");
 }
 
 int findIndex(int arr[], int value) {
