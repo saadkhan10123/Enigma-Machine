@@ -132,6 +132,7 @@
     <ClCompile Include="enigmaMachine.c" />
     <ClCompile Include="key.c" />
     <ClCompile Include="supportFunctions.c" />
+    <ClCompile Include="test.c" />
     <ClCompile Include="working.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

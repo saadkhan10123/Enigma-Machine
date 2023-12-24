@@ -91,3 +91,28 @@ void makeRandomString(char* str, int length) {
 	}
 	str[length] = '\0';
 }
+
+void pushToString(char** str, char c, int size) {
+	// This function pushes a character to a string of variable length
+	char* temp = malloc(sizeof(char) * (size + 1));
+	for (int i = 0; i < size; i++) {
+		temp[i] = (*str)[i];
+	}
+	temp[size] = c;
+	*str = temp;
+}
+
+void inputString(char* str) {
+	// This function takes input from the user
+	printf("Enter a string: ");
+	char input = ' ';
+	int i = 0;
+	getchar();
+	while (input != '\n') {
+		input = getchar();
+		pushToString(&str, input, i);
+		i++;
+	}
+	str[i] = '\0';
+}
+
