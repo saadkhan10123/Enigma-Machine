@@ -20,10 +20,10 @@ typedef struct {
 	int plugBoard[10][2];
 } Settings;
 
-int convertToIndex(char c);
-void uppercase(char* text);
-
 int main(void) {
-	testEncryptDecrypt();
+	printMenu();
+
+
+	//testEncryptDecrypt();
 	return 0;
 }

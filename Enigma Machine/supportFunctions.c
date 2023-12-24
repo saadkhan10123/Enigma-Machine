@@ -26,12 +26,12 @@ void printArray(int arr[], int size) {
 
 int convertToIndex(char c) {
 	// This function converts a character to an index
-	return (int)c - 97;
+	return (int)c - 65;
 }
 
 char convertToChar(int i) {
 	// This function converts an index to a character
-	return (char)(i + 97);
+	return (char)(i + 65);
 }
 
 void uppercase(char* text) {
@@ -177,16 +177,12 @@ void makeRandomString(char* str, int length) {
 }
 
 void pushToString(char** str, char c, int size) {
-	// This function pushes a character to a string of variable length
-	char* temp = malloc(sizeof(char) * (size + 1));
-	for (int i = 0; i < size; i++) {
-		temp[i] = (*str)[i];
-	}
-	temp[size] = c;
-	*str = temp;
+	// This function pushes a character to a string of variable length using realloc
+	*str = (char *)realloc(*str, (size + 1) * sizeof(char));
+	(*str)[size] = c;
 }
 
-void inputString(char* str) {
+void inputString(char** str) {
 	// This function takes input from the user
 	printf("Enter a string: ");
 	char input = ' ';
@@ -194,9 +190,9 @@ void inputString(char* str) {
 	getchar();
 	while (input != '\n') {
 		input = getchar();
-		pushToString(&str, input, i);
+		pushToString(str, input, i);
 		i++;
 	}
-	str[i] = '\0';
+	(*str)[i - 1] = '\0';
 }
 

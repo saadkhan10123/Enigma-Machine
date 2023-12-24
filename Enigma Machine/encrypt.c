@@ -13,8 +13,7 @@ typedef struct {
 int putThroughRotor(Settings* settings, int rotorNumber, int index) {
 	// This function puts a value through a rotor
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
-	int indexToFind = findIndex(settings->rotors[rotorUsed], index);
-	return settings->rotorPositions[rotorNumber][indexToFind];
+	return settings->rotors[rotorUsed][index];
 }
 
 void encrypt(Settings* settings, char* str, char* output) {
@@ -40,6 +39,9 @@ void encrypt(Settings* settings, char* str, char* output) {
 		}
 		// Rotate rotors
 		rotateRotors(settings, i);
+
+		/*printArray(settings->rotorPositions[0], 26);
+		printArray(settings->rotors[settings->rotorsUsed[0]], 26);*/
 
 		// Put through plugboard again
 		index = putThroughPlugBoard(settings, index);

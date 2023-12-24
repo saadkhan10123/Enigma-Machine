@@ -13,7 +13,7 @@ void rotateRotor(int* rotor);
 void initializeRotorSettings(Settings* settings) {
 	// Initialize rotors used
 	int rotorsUsedSettings[3] = { 0 };
-	//inputRotorsUsed(rotorsUsedSettings);
+	inputRotorsUsed(rotorsUsedSettings);
 
 	for (int i = 0; i < 3; i++) {
 		settings->rotorsUsed[i] = rotorsUsedSettings[i];
@@ -51,15 +51,6 @@ void initializeRotorSettings(Settings* settings) {
 			rotateRotor(settings->rotors[settings->rotorsUsed[i]]);
 		}
 	}
-	/*printf("First rotor: \n");
-	printArray(settings->rotors[settings->rotorsUsed[0]], 26);
-	printf("-------------------- \n");
-	printf("Second rotor: \n");
-	printArray(settings->rotors[settings->rotorsUsed[1]], 26);
-	printf("-------------------- \n\n");
-	printf("Third rotor: \n");
-	printArray(settings->rotors[settings->rotorsUsed[2]], 26);
-	printf("-------------------- \n\n");*/
 
 	// Initialize reflector
 	int reflectorSettings[26] = { 24, 17, 20, 7, 16, 18, 11, 3, 15, 23, 13, 6, 14, 10, 12, 8, 4, 1, 5, 25, 2, 22, 21, 9, 0, 19 };

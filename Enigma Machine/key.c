@@ -76,10 +76,10 @@ void inputPlugs(Settings* settings) {
 	printf(YELLOW);
 	
 	int n = 0;
-	char plug[20];
+	char plug[21];
 	do {
 		printf("\nSet Plug Configurations: ");
-		scanf_s("%s", plug, 20);
+		scanf_s("%s", plug, 21);
 
 		for (int i = 0; i < strlen(plug); i++) {
 
@@ -153,7 +153,6 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 		// Check for repetition
 		for (int j = 0; j < i; j++) {
 			if (plug[i] == plug[j]) {
-
 				i--;
 				break;
 			}

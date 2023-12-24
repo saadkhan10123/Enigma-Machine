@@ -11,8 +11,7 @@ typedef struct {
 int decryptThroughRotor(Settings* settings, int rotorNumber, int index) {
 	// This function puts a value through a rotor to decrypt it
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
-	int indexToFind = findIndex(settings->rotorPositions[rotorNumber], index);
-	return settings->rotors[rotorUsed][indexToFind];
+	return findIndex(settings->rotors[rotorUsed], index);
 }
 
 void decrypt(Settings* settings, char* str, char* output) {
