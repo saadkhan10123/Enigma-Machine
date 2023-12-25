@@ -18,5 +18,6 @@ int main(void) {
 
 
 	//testEncryptDecrypt();
+	//testEncrypt();
 	return 0;
 }

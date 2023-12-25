@@ -45,7 +45,19 @@ void testKey() {
 }
 
 void testEncrypt() {
+	Settings *settings = malloc(sizeof(Settings));
+	initializeRotorSettings(settings);
 
+	printSettings(settings);
+
+	char *str = malloc(sizeof(char) * 100);
+	char *output = malloc(sizeof(char) * 100);
+	printf("Enter String: ");
+	scanf_s("%s", str, 100);
+
+	uppercase(str);
+	encrypt(settings, str, output);
+	printf("Encrypted: %s\n", output);
 }
 
 void testDecrypt() {

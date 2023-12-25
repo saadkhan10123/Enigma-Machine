@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "Settings.h"
 
@@ -12,14 +13,6 @@
 
 // Reset Color
 #define COLOR_RESET "\033[0m"
-
-typedef struct {
-	int rotors[5][26];
-	int rotorPositions[3][26];
-	int reflector[26];
-	int rotorsUsed[3];
-	int plugBoard[10][2];
-} Settings;
 
 void inputRotorsUsed(int rotor[]) {
 	printf(YELLOW);
@@ -124,18 +117,26 @@ void inputPlugs(Settings* settings) {
 	createPairs(plug, settings);
 }
 
+void manualConfiguration(Settings* settings) {
+	// This function takes input from user and sets the encryption key
+	inputRotorsUsed(settings->rotorsUsed);
+	inputRotorPositions(settings->defaultPositions);
+	inputPlugs(settings);
+}
+
 // Function to generate random values for rotor, position, and plug arrays
-void randomKey(int rotor[3], int position[3], char plug[21]) {
+void randomKey(Settings* settings) {
 	srand((unsigned)time(NULL));
+
+	char plug[21] = " ";
 
 	// Generate random values for rotor 
 	for (int i = 0; i < 3; i++) {
-		rotor[i] = rand() % 5;  // Values between 0 and 4
+		settings->rotorsUsed[i] = rand() % 5;  // Values between 0 and 4
 
 		// Check for repetition
-		for (int j = 0; j < i; ++j) {
-			if (rotor[i] == rotor[j]) {
-
+		for (int j = 0; j < i; j++) {
+			if (settings->rotorsUsed[i] == settings->rotorsUsed[j]) {
 				i--;
 				break;
 			}
@@ -144,7 +145,7 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 
 	// Generate random values for position 
 	for (int i = 0; i < 3; i++) {
-		position[i] = (rand() % 26);  // Values between 0 and 25
+		settings->defaultPositions[i] = (rand() % 26);  // Values between 0 and 25
 	}
 
 	// Generate random values for plug 
@@ -158,12 +159,19 @@ void randomKey(int rotor[3], int position[3], char plug[21]) {
 				break;
 			}
 		}
+		// Add null character at the end of the string
+		plug[i + 1] = '\0';
+
+		// Convert plugs to pairs
+		createPairs(plug, settings);
+
 	}
 }
 
 // Get key directly from user
-void directKeyInput(int rotor[3], int position[3], char plug[21]) {
+void directKeyInput(Settings *settings) {
 	char key[30] = " ";
+	char plug[21] = " ";
 
 	// Conditions to check validity of key
 	bool keyValid = true;
@@ -241,7 +249,7 @@ void directKeyInput(int rotor[3], int position[3], char plug[21]) {
 
 		// Get values for rotors used
 		for (int i = 0; i < 3; i++) {
-			rotor[i] = (int)(key[i]) - '1'; // Values between 0 and 5
+			settings->rotorsUsed[i] = (int)(key[i]) - '1'; // Values between 0 and 5
 		}
 
 		// Get values for rotor position
@@ -251,7 +259,7 @@ void directKeyInput(int rotor[3], int position[3], char plug[21]) {
 			int number = (key[i] - '0') * 10 + (key[i + 1] - '0');
 
 			// Assign the extracted number to the array
-			position[j] = number; // Values Between 0 and 25
+			settings->defaultPositions[j] = number; // Values Between 0 and 25
 		}
 
 		// Get values for plugs connected
@@ -262,8 +270,10 @@ void directKeyInput(int rotor[3], int position[3], char plug[21]) {
 				plug[j] = key[i]; // Assign value to plug
 				j++;
 			}
+			plug[j] = '\0'; // Add null character at the end of the string]
 		}
 
+		// Convert plugs to pairs
+		createPairs(plug, settings);
 	} while (!keyValid);
-
 }

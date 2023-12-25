@@ -1,16 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Settings.h"
 
 void rotateRotor(int* rotor);
 
 void initializeRotorSettings(Settings* settings) {
-	// Initialize rotors used
-	int rotorsUsedSettings[3] = { 0 };
-	inputRotorsUsed(rotorsUsedSettings);
+	// This function initializes the rotor settings
 
-	for (int i = 0; i < 3; i++) {
-		settings->rotorsUsed[i] = rotorsUsedSettings[i];
-	}
+	// Get the key 
+	keyConfigurationType(settings);
 
 	// Initialize rotors
 	int rotorSettings[5][26] = {
@@ -27,20 +25,9 @@ void initializeRotorSettings(Settings* settings) {
 		}
 	}
 
-	// Initialize rotor positions
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 26; j++) {
-			settings->rotorPositions[i][j] = j;
-		}
-	}
-
 	// Rotate rotors to the correct position
-	int rotorPositionsSettings[3] = { 0 };
-	//inputRotorPositions(rotorPositionsSettings);
-
-
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < rotorPositionsSettings[i]; j++) {
+		for (int j = 0; j < settings->defaultPositions[i]; j++) {
 			rotateRotor(settings->rotors[settings->rotorsUsed[i]]);
 		}
 	}
@@ -50,10 +37,6 @@ void initializeRotorSettings(Settings* settings) {
 	for (int i = 0; i < 26; i++) {
 		settings->reflector[i] = reflectorSettings[i];
 	}
-
-	// Initialize plugboard
-	// This contains pairs of numbers which are non-repeating
-	inputPlugs(settings);
 }
 
 void rotateRotor(int* rotor) {
@@ -68,13 +51,10 @@ void rotateRotor(int* rotor) {
 void rotateRotors(Settings* settings, int rotationNumber) {
 	// This function rotates all the rotors
 	rotateRotor(settings->rotors[settings->rotorsUsed[0]]);
-	rotateRotor(settings->rotorPositions[0]);
 	if (rotationNumber % 26 == 0) {
 		rotateRotor(settings->rotors[settings->rotorsUsed[1]]);
-		rotateRotor(settings->rotorPositions[1]);
 		if (rotationNumber % 676 == 0) {
 			rotateRotor(settings->rotors[settings->rotorsUsed[2]]);
-			rotateRotor(settings->rotorPositions[2]);
 		}
 	}
 }

@@ -6,6 +6,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <Windows.h>
+#include <stdbool.h>
+#include "Settings.h"
 
 // Colored Text
 #define GREEN "\033[1;92m"
@@ -15,6 +17,8 @@
 
 // Reset Color
 #define COLOR_RESET "\033[0m"
+
+void clearInput();
 
 void printArray(int arr[], int size) {
 	// This function prints an array
@@ -56,33 +60,33 @@ void printString(char* str) {
 }
 
 // Print out the encryption key
-void printKey(int rotor[], int position[], char* plug, char plugPair[10][2]) {
+void printKey(Settings *settings) {
 
 	printf(GREEN"-Encryption Key: "COLOR_RESET);
 
 	//Print Rotors
 	for (int i = 0; i < 3; i++) {
-		printf(GREEN"%d"COLOR_RESET, rotor[i] + 1);
+		printf(GREEN"%d"COLOR_RESET, settings->rotorsUsed[i] + 1);
 		Sleep(50);
 	}
 
 	// Print Positions
 	for (int i = 0; i < 3; i++) {
-		if (position[i] < 10) {
-			printf(GREEN"0%d"COLOR_RESET, position[i]);
+		if (settings->defaultPositions[i] < 10) {
+			printf(GREEN"0%d"COLOR_RESET, settings->defaultPositions[i]);
 			Sleep(50);
 		}
 
 		else {
-			printf(GREEN"%d"COLOR_RESET, position[i]);
+			printf(GREEN"%d"COLOR_RESET, settings->defaultPositions[i]);
 			Sleep(50);
 		}
 	}
 
 	// Print Plugs
-	for (int i = 0; i < strlen(plug) / 2; i++) {
+	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 2; j++) {
-			printf(GREEN"%c"COLOR_RESET, plugPair[i][j]);
+			printf(GREEN"%c"COLOR_RESET, convertToChar(settings->plugBoard[i][j]));
 			Sleep(50);
 			
 		}
@@ -112,20 +116,57 @@ void makeRandomString(char* str, int length) {
 void pushToString(char** str, char c, int size) {
 	// This function pushes a character to a string of variable length using realloc
 	*str = (char *)realloc(*str, (size + 1) * sizeof(char));
+	if (*str == NULL) {
+		printf(RED"Error allocating memory\n"COLOR_RESET);
+		exit(1);
+	}
 	(*str)[size] = c;
+}
+
+void clearInput() {
+	// This function clears the input buffer
+	while (getchar() != '\n');
 }
 
 void inputString(char** str) {
 	// This function takes input from the user
-	printf("Enter a string: ");
+	system("cls");
+	printf("Press Enter twice to confirm input\n");
+	printf("Enter a string:\n");
 	char input = ' ';
 	int i = 0;
-	getchar();
-	while (input != '\n') {
+	clearInput();
+	while (true) {
 		input = getchar();
 		pushToString(str, input, i);
+		if (input == '\n') {
+			if (i == 0) {
+				printf("Enter a valid string: ");
+				continue;
+			}
+			else if ((*str)[i - 1] == '\n') {
+				break;
+			}
+		}
 		i++;
 	}
-	(*str)[i - 1] = '\0';
+	(*str)[i] = '\0';
 }
 
+
+void printSettings(Settings settings) {
+	// This function prints the settings
+	printf("Rotors Used: ");
+	printArray(settings.rotorsUsed, 3);
+	printf("Rotor Positions: ");
+	printArray(settings.defaultPositions, 3);
+	printf("Plugboard: ");
+	for (int i = 0; i < 10; i++) {
+		printf("%c%c ", convertToChar(settings.plugBoard[i][0]), convertToChar(settings.plugBoard[i][1]));
+	}
+	printf("\n");
+	printf("Rotors: \n");
+	for (int i = 0; i < 5; i++) {
+		printArray(settings.rotors[i], 26);
+	}
+}

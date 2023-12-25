@@ -11,7 +11,13 @@ int putThroughRotor(Settings* settings, int rotorNumber, int index) {
 void encrypt(Settings* settings, char* str, char* output) {
 	// Iterate through the string
 	for (int i = 0; i < strlen(str); i++) {
+		// Convert the character to an index
 		int index = convertToIndex(str[i]);
+
+		if (index < 0 || index > 25) {
+			output[i] = str[i];
+			continue;
+		}
 		int j;
 
 		// Put through plugboard

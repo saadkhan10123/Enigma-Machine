@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <Windows.h>
 #include "Settings.h"
 
 #pragma warning(disable:4996)
@@ -17,6 +20,9 @@
 
 void startEncryption();
 void startDecryption();
+void printMenu();
+void useMenuOption(int option);
+void generateKey();
 
 // Title screen for the program
 void titleScreen()
@@ -86,10 +92,9 @@ void titleScreen()
 	}
 
 	system("cls");
-
 }
 
-int printMenu() {
+void printMenu() {
 	int option = 1;
 	int keyOption = 0;
 
@@ -144,15 +149,39 @@ int printMenu() {
 	// Clear the screen when enter is pressed
 	system("cls");
 	
-	return option;
+	useMenuOption(option);
+}
+
+void useMenuOption (int option) {
+	switch (option)	{
+	case 1:
+		startEncryption();
+		break;
+	case 2:
+		startDecryption();
+		break;
+	case 3:
+		generateKey();
+		break;
+	case 4:
+		exit(0);
+		break;
+	default:
+		break;
+	}
+}
+
+void generateKey() {
+	Settings *settings = malloc(sizeof(Settings));
+	initializeRotorSettings(settings);
+	printKey(settings);
 }
 
 /*
 	This function will get input for user
 	to determine how the key will be generated
 */
-int configurationType() 
-{
+void keyConfigurationType(Settings* settings) {
 
 	int option = 1;
 	printf(GREEN"-Choose Key Configuration Type-\n\n"COLOR_RESET);
@@ -208,10 +237,21 @@ int configurationType()
 			break;
 		}
 	}
-
 	system("cls");
 
-	return option;
+	switch (option)	{
+	case 1:
+		manualConfiguration(settings);
+		break;
+	case 2:
+		randomKey(settings);
+		break;
+	case 3:
+		directKeyInput(settings);
+		break;
+	default:
+		break;
+	}
 }
 
 void startEncryption() {
@@ -221,13 +261,17 @@ void startEncryption() {
 
 	initializeRotorSettings(settings);
 
+	getchar();
 	inputString(&str);
 
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
 	uppercase(str);
 	encrypt(settings, str, output);
 
-	printf("Encrypted: %s\n", output);
+	printf("Encrypted string: \n%s", output);
+
+	printf("\n\n");
+	printKey(settings);
 }
 
 void startDecryption() {
@@ -243,5 +287,5 @@ void startDecryption() {
 	uppercase(str);
 	decrypt(settings, str, output);
 
-	printf("Decrypted: %s\n", output);
+	printf("Decrypted string: \n%s\n", output);
 }
