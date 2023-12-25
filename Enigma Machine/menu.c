@@ -18,6 +18,77 @@
 void startEncryption();
 void startDecryption();
 
+// Title screen for the program
+void titleScreen()
+{
+	char title[] =
+		GREEN"    ______   _   _   _____    _____   __  __                   \n"
+		"   |  ____| | \\ | | |_   _|  / ____| |  \\/  |     /\\           \n"
+		"   | |__    |  \\| |   | |   | |  __  | \\  / |    /  \\          \n"
+		"   |  __|   | . ` |   | |   | | |_ | | |\\/| |   / /\\ \\         \n"
+		"   | |____  | |\\  |  _| |_  | |__| | | |  | |  / ____ \\        \n"
+		"   |______| |_| \\_| |_____|  \\_____| |_|  |_| /_/    \\_\\       \n"
+		"                                                               \n"
+		"                                                               \n"
+		"  __  __               _____   _    _   _____   _   _   ______ \n"
+		" |  \\/  |     /\\      / ____| | |  | | |_   _| | \\ | | |  ____|\n"
+		" | \\  / |    /  \\    | |      | |__| |   | |   |  \\| | | |__   \n"
+		" | |\\/| |   / /\\ \\   | |      |  __  |   | |   | . ` | |  __|  \n"
+		" | |  | |  / ____ \\  | |____  | |  | |  _| |_  | |\\  | | |____ \n"
+		" |_|  |_| /_/    \\_\\  \\_____| |_|  |_| |_____| |_| \\_| |______|\n"
+		"_______________________________________________________________"COLOR_RESET;
+
+
+	// Print every character of the title until the null character is reached
+	for (char* c = title; *c != '\0'; ++c) {
+
+		// Print character
+		putchar(*c);
+		fflush(stdout);
+
+		// Time delay on new line to make it more stylish
+		if (*c == '\n') {
+			Sleep(150);
+		}
+	}
+
+	printf("\n\n");
+
+	// Blinking text
+	bool isVisible = true;
+
+	for (;;) { // Wait for key press
+		printf("\r");
+
+		// Create a blinking effect
+		if (isVisible) {
+			printf(CYAN"\t\t -PRESS ENTER TO START- "COLOR_RESET); // Print text
+		}
+
+		else {
+			for (int i = 0; i < 40; ++i) {
+				printf(" "); // Hide text
+			}
+		}
+
+		fflush(stdout);
+
+		// Blink timer
+		Sleep(500);
+		isVisible = !isVisible;
+
+		// Exit title screen when enter pressed
+		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			
+			Sleep(150);
+			break;
+		}
+	}
+
+	system("cls");
+
+}
+
 int printMenu() {
 	int option = 1;
 	int keyOption = 0;
