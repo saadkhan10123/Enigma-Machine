@@ -18,6 +18,8 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
+#pragma warning(disable : 4996)
+
 void clearInput();
 
 void printArray(int arr[], int size) {
@@ -113,19 +115,15 @@ void makeRandomString(char* str, int length) {
 	str[length] = '\0';
 }
 
-void pushToString(char** str, char c, int size) {
-	// This function pushes a character to a string of variable length using realloc
-	*str = (char *)realloc(*str, (size + 1) * sizeof(char));
-	if (*str == NULL) {
-		printf(RED"Error allocating memory\n"COLOR_RESET);
-		exit(1);
-	}
-	(*str)[size] = c;
-}
-
-void clearInput() {
-	// This function clears the input buffer
-	while (getchar() != '\n');
+void pushToString(char** str, char c) {
+	// This function pushes a character to a string of variable length using malloc
+	int size = strlen(*str);
+	char* temp = (char*)malloc(size + 2);
+	strcpy(temp, *str);
+	temp[size] = c;
+	temp[size + 1] = '\0';
+	free(*str);
+	*str = temp;
 }
 
 void inputString(char** str) {
@@ -133,12 +131,12 @@ void inputString(char** str) {
 	system("cls");
 	printf("Press Enter twice to confirm input\n");
 	printf("Enter a string:\n");
-	char input = ' ';
+	char input = 2;
 	int i = 0;
-	clearInput();
+	//while(getchar() == '\n');
 	while (true) {
 		input = getchar();
-		pushToString(str, input, i);
+		pushToString(str, input);
 		if (input == '\n') {
 			if (i == 0) {
 				printf("Enter a valid string: ");
@@ -150,7 +148,6 @@ void inputString(char** str) {
 		}
 		i++;
 	}
-	(*str)[i] = '\0';
 }
 
 

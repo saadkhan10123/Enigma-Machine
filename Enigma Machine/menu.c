@@ -256,7 +256,8 @@ void keyConfigurationType(Settings* settings) {
 
 void startEncryption() {
 	// This function starts the encryption process
-	char* str = NULL;
+	char* str = (char*)malloc(sizeof(char));
+	str[0] = '\0';
 	Settings *settings = malloc(sizeof(Settings));
 
 	initializeRotorSettings(settings);
@@ -276,7 +277,7 @@ void startEncryption() {
 
 void startDecryption() {
 	// This function starts the decryption process
-	char* str = NULL;
+	char str[] = "\0";
 	Settings* settings = malloc(sizeof(Settings));
 
 	initializeRotorSettings(settings);
