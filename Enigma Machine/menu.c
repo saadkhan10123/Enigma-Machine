@@ -95,6 +95,8 @@ void titleScreen()
 }
 
 void printMenu() {
+	fflush(stdin); // Clear the input buffer
+	
 	int option = 1;
 	int keyOption = 0;
 
@@ -182,7 +184,8 @@ void generateKey() {
 	to determine how the key will be generated
 */
 void keyConfigurationType(Settings* settings) {
-
+	fflush(stdin); // Clear the input buffer
+	
 	int option = 1;
 	printf(GREEN"-Choose Key Configuration Type-\n\n"COLOR_RESET);
 	
@@ -254,7 +257,9 @@ void keyConfigurationType(Settings* settings) {
 	}
 }
 
-void startEncryption() {
+void startEncryption() 
+{
+	
 	// This function starts the encryption process
 	char* str = (char*)malloc(sizeof(char));
 	str[0] = '\0';
@@ -275,7 +280,8 @@ void startEncryption() {
 	printKey(settings);
 }
 
-void startDecryption() {
+void startDecryption() 
+{
 	// This function starts the decryption process
 	char str[] = "\0";
 	Settings* settings = malloc(sizeof(Settings));

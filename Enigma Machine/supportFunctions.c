@@ -127,13 +127,15 @@ void pushToString(char** str, char c) {
 }
 
 void inputString(char** str) {
+	fflush(stdin); // Clear the input buffer
+	
 	// This function takes input from the user
 	system("cls");
 	printf("Press Enter twice to confirm input\n");
 	printf("Enter a string:\n");
 	char input = 2;
 	int i = 0;
-	//while(getchar() == '\n');
+	clearInput();
 	while (true) {
 		input = getchar();
 		pushToString(str, input);

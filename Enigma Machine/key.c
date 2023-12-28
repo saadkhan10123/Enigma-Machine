@@ -15,6 +15,8 @@
 #define COLOR_RESET "\033[0m"
 
 void inputRotorsUsed(int rotor[]) {
+	fflush(stdin); // Clear the input buffer
+	
 	printf(YELLOW);
 	// This function takes input from user and sets the rotors used
 	printf("Set Rotor Configuration\n");
@@ -41,6 +43,8 @@ void inputRotorsUsed(int rotor[]) {
 }
 
 void inputRotorPositions(int position[]) {
+	fflush(stdin); // Clear the input buffer
+	
 	printf(YELLOW);
 	printf("\nSet Rotor Positions\n");
 
@@ -67,6 +71,8 @@ void createPairs(char* plug, Settings* settings) {
 }
 
 void inputPlugs(Settings* settings) {
+	fflush(stdin); // Clear the input buffer
+	
 	printf(YELLOW);
 	
 	int n = 0;
@@ -126,6 +132,8 @@ void manualConfiguration(Settings* settings) {
 
 // Function to generate random values for rotor, position, and plug arrays
 void randomKey(Settings* settings) {
+	fflush(stdout); // Clear the input buffer
+	
 	srand((unsigned)time(NULL));
 
 	char plug[21] = " ";
@@ -170,6 +178,8 @@ void randomKey(Settings* settings) {
 
 // Get key directly from user
 void directKeyInput(Settings *settings) {
+	fflush(stdin); // Clear the input buffer
+	
 	char key[30] = " ";
 	char plug[21] = " ";
 
