@@ -20,8 +20,6 @@
 
 #pragma warning(disable : 4996)
 
-void clearInput();
-
 void printArray(int arr[], int size) {
 	// This function prints an array
 	for (int i = 0; i < size; i++) {
@@ -132,16 +130,14 @@ void inputString(char** str) {
 	// This function takes input from the user
 	system("cls");
 	printf("Press Enter twice to confirm input\n");
-	printf("Enter a string:\n");
 	char input = 2;
 	int i = 0;
-	clearInput();
 	while (true) {
 		input = getchar();
 		pushToString(str, input);
 		if (input == '\n') {
 			if (i == 0) {
-				printf("Enter a valid string: ");
+				printf("Enter a valid string: \n");
 				continue;
 			}
 			else if ((*str)[i - 1] == '\n') {

@@ -236,10 +236,11 @@ void keyConfigurationType(Settings* settings) {
 
 		// Break out of the loop when enter key is pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
-			Sleep(250);
+			Sleep(300);
 			break;
 		}
 	}
+	fflush(stdin);
 	system("cls");
 
 	switch (option)	{
@@ -257,13 +258,15 @@ void keyConfigurationType(Settings* settings) {
 	}
 }
 
-void startEncryption() 
-{
+void startEncryption() {
 	
 	// This function starts the encryption process
 	char* str = (char*)malloc(sizeof(char));
 	str[0] = '\0';
 	Settings *settings = malloc(sizeof(Settings));
+
+	// Get the key 
+	keyConfigurationType(settings);
 
 	initializeRotorSettings(settings);
 
@@ -283,8 +286,11 @@ void startEncryption()
 void startDecryption() 
 {
 	// This function starts the decryption process
-	char str[] = "\0";
+	char* str = (char*)malloc(sizeof(char));
+	str[0] = '\0';
 	Settings* settings = malloc(sizeof(Settings));
+
+	directKeyInput(settings);
 
 	initializeRotorSettings(settings);
 

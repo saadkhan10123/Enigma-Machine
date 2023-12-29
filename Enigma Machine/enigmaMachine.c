@@ -16,8 +16,9 @@
 int main(void) {
 	//titleScreen();
 	printMenu();
-
+	getchar();
 	//testEncryptDecrypt();
 	//testEncrypt();
+	main();
 	return 0;
 }
