@@ -14,6 +14,7 @@
 #pragma warning(disable : 4996)
 
 int main(void) {
+	titleScreen();
 	printMenu();
 
 
