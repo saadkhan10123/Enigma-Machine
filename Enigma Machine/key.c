@@ -15,59 +15,83 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
+// Clears the input buffer
+void clearInput() {
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// This function takes input from the user and sets the rotors used
 void inputRotorsUsed(int* rotor) {
-	fflush(stdin); // Clear the input buffer
-	
-	printf(YELLOW);
-	// This function takes input from user and sets the rotors used
-	printf("Set Rotor Configuration\n");
+	// Clear the input buffer
+	clearInput();
+
+	// Get input as char to avoid errors
+	char input;
+
+	printf(GREEN"-Set Rotor Configuration-\n"COLOR_RESET);
 
 	for (int i = 0; i < 3; i++) {
 		
 		// Get input for rotors used
-		printf("Rotor %d: ", i + 1);
-		scanf_s("%d", &rotor[i]);
+		printf(YELLOW"Rotor %d: "COLOR_RESET, i + 1);
 
-		rotor[i]--; // Convert to index [0, 4]
+		// Read a single character and ignore whitespace or newline
+		while (scanf("%c", &input) != 1);
 
 		// Check for valid input
-		if (rotor[i] < 0 || rotor[i] > 4) {
-			printf("Enter a Valid Number\n");
+		if (input < '1' || input > '5') {
+			printf(RED"Enter a Valid Number\n"COLOR_RESET);
 			i--;
 			continue;
 		}
 
-		// Check for repition
+		// Convert char into a number
+		rotor[i] = (int)input - '0';
+		rotor[i]--; // Convert to index [0, 4]
+
+		// Check for repetition
 		for (int j = 0; j < i; j++) {
 			if (rotor[i] == rotor[j]) {
-				printf("Enter a Distinct Number\n");
+				printf(RED"Enter a Distinct Number\n"COLOR_RESET);
 				i--;
+				break; // Break out of the repetition check loop
 			}
 		}
+
+		clearInput();
 	}
-	printf(COLOR_RESET);
 }
 
 void inputRotorPositions(int* position) {
-	fflush(stdin); // Clear the input buffer
+	clearInput();
 	
-	printf(YELLOW);
-	printf("\nSet Rotor Positions\n");
+	// Get input as character to avoid errors
+	char input;
+
+	printf(GREEN"\n-Set Rotor Positions-\n"COLOR_RESET);
 
 	// Get input for positions
 	for (int i = 0; i < 3; i++) {
-
+		
 		// Get input for rotor positions
-		printf("Position Rotor %d: ", i + 1);
-		scanf_s("%d", &position[i]);
-		position[i]--;
+		printf(YELLOW"Position Rotor %d: "COLOR_RESET, i + 1);
+
+		// Read a single character and ignore whitespace or newline
+		while (scanf("%c", &input) != 1);
 
 		// Check for valid input
-		if (position[i] < 0 || position[i] > 25) {
-			printf("Enter a Valid Number\n");
+		if (input < '0' || input > '25') {
+			printf(RED"Enter a Valid Number\n"COLOR_RESET);
 			i--;
 			continue;
 		}
+		
+		// Convert char into number
+		position[i] = (int)input - '0';
+		position[i]--; // Convert to index [0, 25]
+
+		clearInput();
 	}
 	printf(COLOR_RESET);
 }
@@ -81,14 +105,15 @@ void createPairs(char* plug, Settings* settings) {
 }
 
 void inputPlugs(Settings* settings) {
-	fflush(stdin); // Clear the input buffer
-	
+	clearInput();
+
+	// Array of plugs
 	char plug[21];
 
 	// Get input for plugs
 	for (;;) {
 		printf(YELLOW"\nSet Plug Configurations: "COLOR_RESET);
-		scanf_s("%s", plug, 21);
+		scanf("%s", plug);
 
 		for (int i = 0; i < strlen(plug); i++) {
 

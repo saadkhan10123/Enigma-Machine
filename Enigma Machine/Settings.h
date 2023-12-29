@@ -1,4 +1,5 @@
 #pragma once
+#include<stdio.h>
 
 // Settings Struct
 
@@ -9,3 +10,4 @@ typedef struct {
 	int plugBoard[10][2];
 	int defaultPositions[3];
 } Settings;
+

@@ -18,7 +18,6 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
-void clearInput();
 
 void printArray(int arr[], int size) {
 	// This function prints an array
@@ -123,10 +122,6 @@ void pushToString(char** str, char c, int size) {
 	(*str)[size] = c;
 }
 
-void clearInput() {
-	// This function clears the input buffer
-	while (getchar() != '\n');
-}
 
 void inputString(char** str) {
 	fflush(stdin); // Clear the input buffer
