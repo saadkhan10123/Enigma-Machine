@@ -156,8 +156,20 @@ void randomKey(Settings* settings) {
 		settings->defaultPositions[i] = (rand() % 26);  // Values between 0 and 25
 	}
 
+	int plugsUsed; // Number of plugs used
+	for (;;) {
+		plugsUsed = (rand() % 19) + 2; // Values between 2 and 20
+
+		// Number should be a multiple of 2
+		if (plugsUsed % 2 != 0) {
+			continue;
+		}
+
+		break;
+	}
+	
 	// Generate random values for plug 
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < plugsUsed; i++) {
 		plug[i] = 'A' + (rand() % 26);  // Random capital letter
 
 		// Check for repetition
