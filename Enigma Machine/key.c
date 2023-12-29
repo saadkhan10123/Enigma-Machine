@@ -4,6 +4,7 @@
 #include "Settings.h"
 
 #pragma warning(disable:4996)
+#pragma warning(disable:6031)
 
 // Colored Text
 #define GREEN "\033[1;92m"
@@ -22,16 +23,21 @@ void inputRotorsUsed(int rotor[]) {
 	printf("Set Rotor Configuration\n");
 
 	for (int i = 0; i < 3; i++) {
+		
+		// Get input for rotors used
 		printf("Rotor %d: ", i + 1);
 		scanf_s("%d", &rotor[i]);
+
 		rotor[i]--; // Convert to index [0, 4]
 
+		// Check for valid input
 		if (rotor[i] < 0 || rotor[i] > 4) {
 			printf("Enter a Valid Number\n");
 			i--;
 			continue;
 		}
 
+		// Check for repition
 		for (int j = 0; j < i; j++) {
 			if (rotor[i] == rotor[j]) {
 				printf("Enter a Distinct Number\n");
@@ -49,10 +55,13 @@ void inputRotorPositions(int position[]) {
 	printf("\nSet Rotor Positions\n");
 
 	for (int i = 0; i < 3; i++) {
+
+		// Get input for rotor positions
 		printf("Position Rotor %d: ", i + 1);
 		scanf_s("%d", &position[i]);
 		position[i]--;
 
+		// Check for valid input
 		if (position[i] < 0 || position[i] > 25) {
 			printf("Enter a Valid Number\n");
 			i--;
@@ -93,6 +102,7 @@ void inputPlugs(Settings* settings) {
 				n++;
 			}
 
+			// Check for repition
 			for (int j = i + 1; j < strlen(plug); j++) {
 				if (plug[i] == plug[j]) {
 					n--; // Decrease no. of valid plugs by 1
@@ -124,6 +134,7 @@ void inputPlugs(Settings* settings) {
 }
 
 void manualConfiguration(Settings* settings) {
+
 	// This function takes input from user and sets the encryption key
 	inputRotorsUsed(settings->rotorsUsed);
 	inputRotorPositions(settings->defaultPositions);
@@ -165,6 +176,7 @@ void randomKey(Settings* settings) {
 			continue;
 		}
 
+		// Exit loop when number of plugs is valid
 		break;
 	}
 	
