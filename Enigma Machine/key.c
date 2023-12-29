@@ -15,7 +15,7 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
-void inputRotorsUsed(int rotor[]) {
+void inputRotorsUsed(int* rotor) {
 	fflush(stdin); // Clear the input buffer
 	
 	printf(YELLOW);
@@ -48,12 +48,13 @@ void inputRotorsUsed(int rotor[]) {
 	printf(COLOR_RESET);
 }
 
-void inputRotorPositions(int position[]) {
+void inputRotorPositions(int* position) {
 	fflush(stdin); // Clear the input buffer
 	
 	printf(YELLOW);
 	printf("\nSet Rotor Positions\n");
 
+	// Get input for positions
 	for (int i = 0; i < 3; i++) {
 
 		// Get input for rotor positions
@@ -82,54 +83,48 @@ void createPairs(char* plug, Settings* settings) {
 void inputPlugs(Settings* settings) {
 	fflush(stdin); // Clear the input buffer
 	
-	printf(YELLOW);
-	
-	int n = 0;
 	char plug[21];
-	do {
-		printf("\nSet Plug Configurations: ");
+
+	// Get input for plugs
+	for (;;) {
+		printf(YELLOW"\nSet Plug Configurations: "COLOR_RESET);
 		scanf_s("%s", plug, 21);
 
 		for (int i = 0; i < strlen(plug); i++) {
 
 			// Invalid Input
 			if (plug[i] < 'A' || plug[i] > 'z') {
+				printf(RED"Invalid Input\n"COLOR_RESET);
 				continue;
-			}
-
-			// Add number of valid plugs if no invalid input
-			else {
-				n++;
 			}
 
 			// Check for repition
 			for (int j = i + 1; j < strlen(plug); j++) {
 				if (plug[i] == plug[j]) {
-					n--; // Decrease no. of valid plugs by 1
+					printf(RED"Enter Distinct Plugs\n"COLOR_RESET);
+					continue;
 				}
 			}
 		}
 
-		// Error messages
-		if (n < strlen(plug)) {
-			printf("Enter a Valid Configuration\n");
-		}
-
+		// Check if number of plugs is a multiple of 2
 		if (strlen(plug) % 2 != 0) {
-			printf("Plugs Should be in Pairs of 2\n");
+			printf(RED"Plugs Should be in Pairs of 2\n"COLOR_RESET);
+			continue;
 		}
 
 		/*
-			Two conditions are checked for valid input of plugs:
-
-			1. No plug is invalid
-			2. Number of plugs should be a multiple of 2
+			Conditions checked for valid input of plugs:
+			1. All plugs are alphabets
+			2. No plug is repeated
+			3. Number of plugs should be a multiple of 2
 		*/
+		// Exit loop if all conditions are valid
+		break;
 
-	} while (n < strlen(plug) || strlen(plug) % 2 != 0);
-	printf(COLOR_RESET);
+	} 
 
-	uppercase(plug); // Convert all characters to uppercase)
+	uppercase(plug); // Convert all characters to uppercase
 	createPairs(plug, settings);
 }
 
@@ -210,7 +205,7 @@ void directKeyInput(Settings *settings) {
 	// Conditions to check validity of key
 	bool keyValid = true;
 
-	do {
+	for (;;) {
 		// Get user input
 		printf("Enter the Encryption Key: ");
 		scanf("%s", key);
@@ -271,43 +266,44 @@ void directKeyInput(Settings *settings) {
 		}
 
 		// Display message for success or failure
-		if (keyValid) {
-			printf("\nKey Entered Successfully!");
-		}
-		else
-		{
+		if (!keyValid) {
 			printf("\nEncryption Key is Invalid");
+			continue;
 		}
 
-		printf("\n");
+		printf("\nKey Entered Successfully!\n");
 
-		// Get values for rotors used
-		for (int i = 0; i < 3; i++) {
-			settings->rotorsUsed[i] = (int)(key[i]) - '1'; // Values between 0 and 5
-		}
+		// Exit loop when key is valid
+		break;
+	}
 
-		// Get values for rotor position
-		for (int i = 3, j = 0; i < 9; i += 2, j++) {
+	// Get values for rotors used
+	for (int i = 0; i < 3; i++) {
+		settings->rotorsUsed[i] = (int)(key[i]) - '1'; // Values between 0 and 5
+	}
 
-			// Extract two digits from the string and convert them to an integer
-			int number = (key[i] - '0') * 10 + (key[i + 1] - '0');
+	// Get values for rotor position
+	for (int i = 3, j = 0; i < 9; i += 2, j++) {
 
-			// Assign the extracted number to the array
-			settings->defaultPositions[j] = number; // Values Between 0 and 25
-		}
+		// Extract two digits from the string and convert them to an integer
+		int number = (key[i] - '0') * 10 + (key[i + 1] - '0');
 
-		// Get values for plugs connected
-		for (int i = 0, j = 0; key[i] != '\0'; i++) {
+		// Assign the extracted number to the array
+		settings->defaultPositions[j] = number; // Values Between 0 and 25
+	}
 
-			// Check for alphabets (plugs)
-			if (isalpha(key[i])) {
-				plug[j] = key[i]; // Assign value to plug
+	// Get values for plugs connected
+	for (int i = 0, j = 0; key[i] != '\0'; i++) {
+
+		// Check for alphabets (plugs)
+		if (isalpha(key[i])) {
+			plug[j] = key[i]; // Assign value to plug
 				j++;
-			}
-			plug[j] = '\0'; // Add null character at the end of the string]
 		}
+		plug[j] = '\0'; // Add null character at the end of the string]
+	}
 
-		// Convert plugs to pairs
-		createPairs(plug, settings);
-	} while (!keyValid);
+	// Convert plugs to pairs
+	createPairs(plug, settings);
+	 
 }
