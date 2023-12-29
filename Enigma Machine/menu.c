@@ -18,6 +18,7 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
+// Function prototypes
 void startEncryption();
 void startDecryption();
 void printMenu();
@@ -27,6 +28,7 @@ void generateKey();
 // Title screen for the program
 void titleScreen()
 {
+	// ASCII Art for title
 	char title[] =
 		GREEN"    ______   _   _   _____    _____   __  __                   \n"
 		"   |  ____| | \\ | | |_   _|  / ____| |  \\/  |     /\\           \n"
@@ -50,7 +52,7 @@ void titleScreen()
 
 		// Print character
 		putchar(*c);
-		fflush(stdout);
+		fflush(stdout); // Clear the output buffer
 
 		// Time delay on new line to make it more stylish
 		if (*c == '\n') {
@@ -64,7 +66,7 @@ void titleScreen()
 	bool isVisible = true;
 
 	for (;;) { // Wait for key press
-		printf("\r");
+		printf("\r"); // Move cursor to the start
 
 		// Create a blinking effect
 		if (isVisible) {
@@ -77,16 +79,15 @@ void titleScreen()
 			}
 		}
 
-		fflush(stdout);
-
+		fflush(stdout); // Clear the output buffer
+		
 		// Blink timer
 		Sleep(500);
 		isVisible = !isVisible;
 
 		// Exit title screen when enter pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
-			
-			Sleep(150);
+			Sleep(300); // Input Delay
 			break;
 		}
 	}
@@ -94,45 +95,43 @@ void titleScreen()
 	system("cls");
 }
 
+// Displays the main menu
 void printMenu() {
 	fflush(stdin); // Clear the input buffer
 	
 	int option = 1;
-	int keyOption = 0;
 
 	printf(GREEN"-Select Your Option-\n\n"COLOR_RESET);
 	for (;;) {
-		// Check for arrow key input
 		
+		// Check for arrow key input
 		// Right or up
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
 			option++;
-			Sleep(150);
+			Sleep(150); // Input Delay
 		}
 
 		// Left or down
 		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
 			option--;
-			Sleep(150);
+			Sleep(150); // Input Delay
 		}
-
+		
+		// Keep an arrow over the option currently selected
 		switch (option)	
 		{
 		case 1:
-			printf(CYAN"\r> Encrypt    Decrypt    Generate Key    Exit"COLOR_RESET);
+			printf(CYAN"\r> Encrypt    Decrypt    Exit"COLOR_RESET);
 			break;
 		case 2:
-			printf(CYAN"\rEncrypt    > Decrypt    Generate Key    Exit"COLOR_RESET);
+			printf(CYAN"\rEncrypt    > Decrypt    Exit"COLOR_RESET);
 			break;
 		case 3:
-			printf(CYAN"\rEncrypt    Decrypt    > Generate Key    Exit"COLOR_RESET);
-			break;
-		case 4:
-			printf(CYAN"\rEncrypt    Decrypt    Generate Key    > Exit"COLOR_RESET);
+			printf(CYAN"\rEncrypt    Decrypt    > Exit"COLOR_RESET);
 			break;
 		default:
 			// Make sure options within range
-			if (option > 4) {
+			if (option > 3) {
 				option = 1;
 			}
 
@@ -144,7 +143,7 @@ void printMenu() {
 		}
 		// Break out of the loop when enter key is pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
-			Sleep(250);
+			Sleep(300); // Input Delay
 			break;
 		}
 	}
@@ -152,6 +151,59 @@ void printMenu() {
 	system("cls");
 	
 	useMenuOption(option);
+}
+
+// Menu for method of string input
+int stringInputMenu() {
+	int option = 1;
+
+	printf(GREEN"-Select Method for String Input-\n\n"COLOR_RESET);
+	for (;;) {
+		
+		// Check for arrow key input
+		// Right or up
+		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
+			option++;
+			Sleep(150); // Input Delay
+		}
+
+		// Left or down
+		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
+			option--;
+			Sleep(150); // Input Delay
+		}
+
+		// Keep an arrow over the option currently selected
+		switch (option)	
+		{
+		case 1:
+			printf(CYAN"\r> Enter String    Get String From File"COLOR_RESET);
+			break;
+		case 2:
+			printf(CYAN"\rEnter String    > Get String From File"COLOR_RESET);
+			break;
+		default:
+			// Make sure options within range
+			if (option > 2) {
+				option = 1;
+			}
+
+			if (option < 1) {
+				option = 2;
+			}
+
+			break;
+		}
+		// Break out of the loop when enter key is pressed
+		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			Sleep(300); // Input Delay
+			break;
+		}
+	}
+	// Clear the screen when enter is pressed
+	system("cls");
+
+	return option;
 }
 
 void useMenuOption (int option) {
@@ -163,47 +215,41 @@ void useMenuOption (int option) {
 		startDecryption();
 		break;
 	case 3:
-		generateKey();
-		break;
-	case 4:
-		exit(0);
+		exit(EXIT_SUCCESS);
 		break;
 	default:
 		break;
 	}
 }
 
+// Generate the encryption key
 void generateKey() {
 	Settings *settings = malloc(sizeof(Settings));
 	initializeRotorSettings(settings);
 	printKey(settings);
 }
 
-/*
-	This function will get input for user
-	to determine how the key will be generated
-*/
+
+// Menu to determine how the key will be generated
 void keyConfigurationType(Settings* settings) {
 	fflush(stdin); // Clear the input buffer
 	
 	int option = 1;
 	printf(GREEN"-Choose Key Configuration Type-\n\n"COLOR_RESET);
 	
-	// Prompt user to input value
 	for (;;) {
 		
-
 		// Check for arrow key input
 		// Right or up
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
 			option++;
-			Sleep(150);
+			Sleep(150); // Input Delay
 		}
 
 		// Left or down
 		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
 			option--;
-			Sleep(150);
+			Sleep(150); // Input Delay
 		}
 
 		// Keep an arrow over the option currently selected
@@ -222,7 +268,7 @@ void keyConfigurationType(Settings* settings) {
 
 		default:
 
-			// Make sure options within range
+			// Make sure options are  within range
 			if (option > 3) {
 				option = 1;
 			}
@@ -236,25 +282,29 @@ void keyConfigurationType(Settings* settings) {
 
 		// Break out of the loop when enter key is pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
-			Sleep(300);
+			Sleep(300); // Input Delay
 			break;
 		}
 	}
 	fflush(stdin);
 	system("cls");
 
+	// Call function depending upon user choice
 	switch (option)	{
-	case 1:
-		manualConfiguration(settings);
-		break;
-	case 2:
-		randomKey(settings);
-		break;
-	case 3:
-		directKeyInput(settings);
-		break;
-	default:
-		break;
+		case 1:
+			// Manually set up encryption settings
+			manualConfiguration(settings);
+			break;
+		case 2:
+			// Generate random encryption key
+			randomKey(settings);
+			break;
+		case 3:
+			// Directly get an input for encryption key
+			directKeyInput(settings);
+			break;
+		default:
+			break;
 	}
 }
 

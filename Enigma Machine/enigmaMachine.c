@@ -14,7 +14,7 @@
 #pragma warning(disable : 4996)
 
 int main(void) {
-	//titleScreen();
+	titleScreen();
 	printMenu();
 	getchar();
 	//testEncryptDecrypt();
