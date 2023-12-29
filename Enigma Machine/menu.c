@@ -18,6 +18,7 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
+// Function prototypes
 void startEncryption();
 void startDecryption();
 void printMenu();
@@ -94,6 +95,7 @@ void titleScreen()
 	system("cls");
 }
 
+// Displays the main menu
 void printMenu() {
 	fflush(stdin); // Clear the input buffer
 	
@@ -151,8 +153,8 @@ void printMenu() {
 	useMenuOption(option);
 }
 
-int stringInputMenu() 
-{
+// Menu for method of string input
+int stringInputMenu() {
 	int option = 1;
 
 	printf(GREEN"-Select Method for String Input-\n\n"COLOR_RESET);
@@ -220,23 +222,21 @@ void useMenuOption (int option) {
 	}
 }
 
+// Generate the encryption key
 void generateKey() {
 	Settings *settings = malloc(sizeof(Settings));
 	initializeRotorSettings(settings);
 	printKey(settings);
 }
 
-/*
-	This function will get input for user
-	to determine how the key will be generated
-*/
+
+// Menu to determine how the key will be generated
 void keyConfigurationType(Settings* settings) {
 	fflush(stdin); // Clear the input buffer
 	
 	int option = 1;
 	printf(GREEN"-Choose Key Configuration Type-\n\n"COLOR_RESET);
 	
-	// Prompt user to input value
 	for (;;) {
 		
 		// Check for arrow key input
@@ -288,18 +288,22 @@ void keyConfigurationType(Settings* settings) {
 	}
 	system("cls");
 
+	// Call function depending upon user choice
 	switch (option)	{
-	case 1:
-		manualConfiguration(settings);
-		break;
-	case 2:
-		randomKey(settings);
-		break;
-	case 3:
-		directKeyInput(settings);
-		break;
-	default:
-		break;
+		case 1:
+			// Manually set up encryption settings
+			manualConfiguration(settings);
+			break;
+		case 2:
+			// Generate random encryption key
+			randomKey(settings);
+			break;
+		case 3:
+			// Directly get an input for encryption key
+			directKeyInput(settings);
+			break;
+		default:
+			break;
 	}
 }
 
