@@ -14,11 +14,14 @@
 #pragma warning(disable : 4996)
 
 int main(void) {
+	// Title Screen and Main Menu
 	titleScreen();
 	printMenu();
+
+	// Return back to title screen
 	getchar();
-	//testEncryptDecrypt();
-	//testEncrypt();
+	system("cls");
+	
 	main();
 	return 0;
 }
