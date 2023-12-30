@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "Settings.h"
 
 #pragma warning(disable:4996)
@@ -18,16 +19,16 @@
 
 // Clears the input buffer
 void clearInput() {
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF);
+
 }
 
 void inputRotorsUsed(int* rotor) {
 	// Clear the input buffer
-	clearInput();
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
 	
 	// String buffer for input
-	char input[20];
+	char input[20] = "";
 
 	printf(GREEN"\n-Set Rotors Used-\n"COLOR_RESET);
 
@@ -70,10 +71,12 @@ void inputRotorsUsed(int* rotor) {
 }
 
 void inputRotorPositions(int* position) {
-	clearInput();
+	// Clear the input buffer
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
 	
 	// String buffer for input 
-	char input[20];
+	char input[20] = "";
 
 	printf(GREEN"\n-Set Rotor Positions-\n"COLOR_RESET);
 
@@ -97,7 +100,7 @@ void inputRotorPositions(int* position) {
 			continue;
 		}
 
-		position[i] = (int)rotorPosition - 1;
+		position[i] = (int)rotorPosition;
 	}
 }
 
@@ -110,10 +113,12 @@ void createPairs(char* plug, Settings* settings) {
 }
 
 void inputPlugs(Settings* settings) {
-	clearInput();
+	// Clear the input buffer
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
 
 	// Array of plugs
-	char plug[21];
+	char plug[21] = "";
 
 	// Get input for plugs
 	for (;;) {
@@ -168,7 +173,7 @@ void manualConfiguration(Settings* settings) {
 
 // Function to generate random values for rotor, position, and plug arrays
 void randomKey(Settings* settings) {
-	fflush(stdout); // Clear the input buffer
+	fflush(stdout); // Clear the output buffer
 	
 	srand((unsigned)time(NULL));
 
@@ -227,7 +232,9 @@ void randomKey(Settings* settings) {
 
 // Get key directly from user
 void directKeyInput(Settings *settings) {
-	fflush(stdin); // Clear the input buffer
+	// Clear the input buffer
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
 	
 	char key[30] = " ";
 	char plug[21] = " ";

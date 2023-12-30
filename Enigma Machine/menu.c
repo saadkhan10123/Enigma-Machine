@@ -8,6 +8,7 @@
 #include "Settings.h"
 
 #pragma warning(disable:4996)
+#pragma warning(disable:6031)
 
 // Colored Text
 #define GREEN "\033[1;92m"
@@ -309,7 +310,7 @@ void keyConfigurationType(Settings* settings) {
 }
 
 void startEncryption() {
-	
+
 	// This function starts the encryption process
 	char* str = (char*)malloc(sizeof(char));
 	str[0] = '\0';

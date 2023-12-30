@@ -115,7 +115,7 @@ void makeRandomString(char* str, int length) {
 
 void pushToString(char** str, char c) {
 	// This function pushes a character to a string of variable length using malloc
-	int size = strlen(*str);
+	int size = (int)strlen(*str);
 	char* temp = (char*)malloc(size + 2);
 	strcpy(temp, *str);
 	temp[size] = c;
@@ -125,7 +125,9 @@ void pushToString(char** str, char c) {
 }
 
 void inputString(char** str) {
-	fflush(stdin); // Clear the input buffer
+	// Clear the input buffer
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF);
 	
 	// This function takes input from the user
 	system("cls");
