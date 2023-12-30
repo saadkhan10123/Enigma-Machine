@@ -8,6 +8,7 @@
 #include "Settings.h"
 
 #pragma warning(disable:4996)
+#pragma warning(disable:6031)
 
 // Colored Text
 #define GREEN "\033[1;92m"
@@ -373,6 +374,7 @@ void askFileOutput(char* output) {
 }
 
 void startEncryption() {
+	
 	// This function starts the encryption process
 	char* str = NULL;
 	Settings *settings = malloc(sizeof(Settings));

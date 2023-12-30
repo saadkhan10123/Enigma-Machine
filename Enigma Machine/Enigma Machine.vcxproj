@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="decrypt.c" />
     <ClCompile Include="encrypt.c" />
-    <ClCompile Include="enigmaMachine.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="key.c" />
     <ClCompile Include="menu.c" />
     <ClCompile Include="supportFunctions.c" />

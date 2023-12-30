@@ -126,6 +126,8 @@ void expandString(char** str) {
 }
 
 void inputString(char** str) {
+	fflush(stdin); // Clear the input buffer
+	
 	// This function takes input from the user
 	*str = (char*)malloc(100 * sizeof(char));
 
