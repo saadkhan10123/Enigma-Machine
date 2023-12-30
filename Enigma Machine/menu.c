@@ -286,7 +286,6 @@ void keyConfigurationType(Settings* settings) {
 			break;
 		}
 	}
-	fflush(stdin);
 	system("cls");
 
 	// Call function depending upon user choice
@@ -308,11 +307,74 @@ void keyConfigurationType(Settings* settings) {
 	}
 }
 
+void askInput(char** str) {
+	system("cls");
+	int option = stringInputMenu();
+
+	switch (option) {
+	case 1:
+		printf(GREEN"-Enter String-\n\n"COLOR_RESET);
+		printf(GREEN"-Press Enter Twice to Confirm-\n\n"COLOR_RESET);
+		inputString(str);
+		break;
+	case 2:
+		printf(GREEN"-Enter File Name-\n\n"COLOR_RESET);
+		char fileName[100];
+		while (true) {
+			scanf("%s", fileName);
+			if (strlen(fileName) > 0) {
+				if (fileName[strlen(fileName) - 1] == '\n') {
+					fileName[strlen(fileName) - 1] = '\0';
+				}
+				break;
+			}
+			else {
+				printf(RED"Invalid input\n"COLOR_RESET);
+			}
+		}
+		inputFile(str, fileName);
+		break;
+	default:
+		break;
+	}
+
+}
+
+void askFileOutput(char* output) {
+	printf(GREEN"Do you want to save the output to a file? (y/n)\n"COLOR_RESET);
+	char choice;
+	while (true) {
+		scanf("%c", &choice);
+		if (choice == 'y' || choice == 'Y') {
+			break;
+		}
+		else if (choice == 'n' || choice == 'N') {
+			return;
+		}
+		else {
+			printf(RED"Invalid input\n"COLOR_RESET);
+		}
+	}
+	printf(GREEN"-Enter File Name-\n\n"COLOR_RESET);
+	char fileName[100];
+	while (true) {
+		scanf("%s", fileName);
+		if (strlen(fileName) > 0) {
+			if (fileName[strlen(fileName) - 1] == '\n') {
+				fileName[strlen(fileName) - 1] = '\0';
+			}
+			break;
+		}
+		else {
+			printf(RED"Invalid input\n"COLOR_RESET);
+		}
+	}
+	outputFile(output, fileName);
+}
+
 void startEncryption() {
-	
 	// This function starts the encryption process
-	char* str = (char*)malloc(sizeof(char));
-	str[0] = '\0';
+	char* str = NULL;
 	Settings *settings = malloc(sizeof(Settings));
 
 	// Get the key 
@@ -320,8 +382,7 @@ void startEncryption() {
 
 	initializeRotorSettings(settings);
 
-	getchar();
-	inputString(&str);
+	askInput(&str);
 
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
 	uppercase(str);
@@ -330,25 +391,27 @@ void startEncryption() {
 	printf("Encrypted string: \n%s", output);
 
 	printf("\n\n");
+
+	askFileOutput(output);
+
 	printKey(settings);
 }
 
-void startDecryption() 
-{
+void startDecryption() {
 	// This function starts the decryption process
-	char* str = (char*)malloc(sizeof(char));
-	str[0] = '\0';
+	char* str = NULL;
 	Settings* settings = malloc(sizeof(Settings));
 
 	directKeyInput(settings);
-
 	initializeRotorSettings(settings);
 
-	inputString(&str);
+	askInput(&str);
 
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
 	uppercase(str);
 	decrypt(settings, str, output);
+
+	askFileOutput(output);
 
 	printf("Decrypted string: \n%s\n", output);
 }

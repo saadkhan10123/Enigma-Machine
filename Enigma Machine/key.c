@@ -232,7 +232,7 @@ void directKeyInput(Settings *settings) {
 
 	for (;;) {
 		// Get user input
-		printf("Enter the Encryption Key: ");
+		printf("Enter the Key: ");
 		scanf("%s", key);
 
 		uppercase(key);

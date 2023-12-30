@@ -113,41 +113,96 @@ void makeRandomString(char* str, int length) {
 	str[length] = '\0';
 }
 
-void pushToString(char** str, char c) {
-	// This function pushes a character to a string of variable length using malloc
-	int size = strlen(*str);
-	char* temp = (char*)malloc(size + 2);
+void expandString(char** str) {
+	// This function expands the size of a string by 100 characters
+	char* temp = (char*)malloc((strlen(*str) + 100) * sizeof(char));
+	if (temp == NULL) {
+		printf("Memory allocation failed\n");
+		exit(1);
+	}
 	strcpy(temp, *str);
-	temp[size] = c;
-	temp[size + 1] = '\0';
-	free(*str);
+	//free(*str);
 	*str = temp;
 }
 
 void inputString(char** str) {
-	fflush(stdin); // Clear the input buffer
-	
 	// This function takes input from the user
-	system("cls");
-	printf("Press Enter twice to confirm input\n");
-	char input = 2;
+	*str = (char*)malloc(100 * sizeof(char));
+
+	if (*str == NULL) {
+		printf("Memory allocation failed\n");
+		exit(1);
+	}
+
+	/*printf("Press Enter twice to confirm input\n");
+	printf("Enter a string:\n");*/
+	char input;
 	int i = 0;
 	while (true) {
+		if ((i + 1) % 100 == 0) {
+			(*str)[i] = '\0';
+			expandString(str);
+		}
+
 		input = getchar();
-		pushToString(str, input);
+
+		// Break loop with double enter
 		if (input == '\n') {
-			if (i == 0) {
-				printf("Enter a valid string: \n");
-				continue;
-			}
-			else if ((*str)[i - 1] == '\n') {
+			if (i > 1 && (*str)[i - 1] == '\n') {
 				break;
 			}
+			else if (i == 0) {
+				printf("Invalid input\n");
+				continue;
+			}
 		}
+
+		(*str)[i] = input;
 		i++;
 	}
+	(*str)[i - 1] = '\0';
 }
 
+void inputFile(char** str, char* fileName) {
+	// This function takes input from a file
+	FILE* fp = fopen(fileName, "r");
+	if (fp == NULL) {
+		printf("File not found\n");
+		exit(1);
+	}
+
+	*str = (char*)malloc(100 * sizeof(char));
+
+	if (*str == NULL) {
+		printf("Memory allocation failed\n");
+		exit(1);
+	}
+
+	char input;
+	int i = 0;
+	while (true) {
+		if ((i + 1) % 100 == 0) {
+			(*str)[i] = '\0';
+			expandString(str);
+		}
+
+		input = fgetc(fp);
+
+		// Break loop with double enter
+		if (input == EOF) {
+			break;
+		}
+
+		(*str)[i] = input;
+		i++;
+	}
+	(*str)[i] = '\0';
+	if (i == 0) {
+		printf("File is empty\n");
+		exit(1);
+	}
+	fclose(fp);
+}
 
 void printSettings(Settings settings) {
 	// This function prints the settings
@@ -164,4 +219,18 @@ void printSettings(Settings settings) {
 	for (int i = 0; i < 5; i++) {
 		printArray(settings.rotors[i], 26);
 	}
+}
+
+void outputFile(char* str, char* fileName) {
+	// This function outputs to a file
+	FILE* fp = fopen(fileName, "w");
+	if (fp == NULL) {
+		printf("File not found\n");
+		exit(1);
+	}
+
+	for (int i = 0; i < strlen(str); i++) {
+		fputc(str[i], fp);
+	}
+	fclose(fp);
 }
