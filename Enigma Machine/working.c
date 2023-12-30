@@ -7,8 +7,7 @@ void rotateRotor(int* rotor);
 void initializeRotorSettings(Settings* settings) {
 	// This function initializes the rotor settings
 
-	// Get the key 
-	keyConfigurationType(settings);
+
 
 	// Initialize rotors
 	int rotorSettings[5][26] = {

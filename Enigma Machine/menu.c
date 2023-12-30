@@ -286,6 +286,7 @@ void keyConfigurationType(Settings* settings) {
 			break;
 		}
 	}
+	fflush(stdin);
 	system("cls");
 
 	// Call function depending upon user choice
@@ -307,12 +308,15 @@ void keyConfigurationType(Settings* settings) {
 	}
 }
 
-void startEncryption() 
-{
+void startEncryption() {
 	
 	// This function starts the encryption process
-	char* str = NULL;
+	char* str = (char*)malloc(sizeof(char));
+	str[0] = '\0';
 	Settings *settings = malloc(sizeof(Settings));
+
+	// Get the key 
+	keyConfigurationType(settings);
 
 	initializeRotorSettings(settings);
 
@@ -332,8 +336,11 @@ void startEncryption()
 void startDecryption() 
 {
 	// This function starts the decryption process
-	char* str = NULL;
+	char* str = (char*)malloc(sizeof(char));
+	str[0] = '\0';
 	Settings* settings = malloc(sizeof(Settings));
+
+	directKeyInput(settings);
 
 	initializeRotorSettings(settings);
 
