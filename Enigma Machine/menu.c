@@ -208,16 +208,23 @@ int stringInputMenu() {
 }
 
 void useMenuOption (int option) {
+	
 	switch (option)	{
+	// Encrypt
 	case 1:
 		startEncryption();
 		break;
+	
+	// Decrypt
 	case 2:
 		startDecryption();
 		break;
+	
+	// Exit
 	case 3:
 		exit(EXIT_SUCCESS);
 		break;
+	
 	default:
 		break;
 	}
@@ -308,20 +315,27 @@ void keyConfigurationType(Settings* settings) {
 	}
 }
 
+// Ask the user if he/she wants to read output from a file
 void askInput(char** str) {
 	system("cls");
+	// Get method for string input
 	int option = stringInputMenu();
 
 	switch (option) {
+	// Get input on the console
 	case 1:
 		printf(GREEN"-Enter String-\n\n"COLOR_RESET);
 		printf(GREEN"-Press Enter Twice to Confirm-\n\n"COLOR_RESET);
 		inputString(str);
 		break;
+
+	// Get input from file
 	case 2:
+		// File name
 		printf(GREEN"-Enter File Name-\n\n"COLOR_RESET);
-		char fileName[100];
-		while (true) {
+		char fileName[100] = "";
+
+		for (;;) {
 			scanf("%s", fileName);
 			if (strlen(fileName) > 0) {
 				if (fileName[strlen(fileName) - 1] == '\n') {
@@ -329,47 +343,70 @@ void askInput(char** str) {
 				}
 				break;
 			}
+
+			// Check for valid file name
 			else {
 				printf(RED"Invalid input\n"COLOR_RESET);
 			}
 		}
+
+		// Get input from a file
 		inputFile(str, fileName);
 		break;
+
 	default:
 		break;
 	}
 
 }
 
+// Ask the user if he/she wants to write output to a file
 void askFileOutput(char* output) {
 	printf(GREEN"Do you want to save the output to a file? (y/n)\n"COLOR_RESET);
+
+	// Get input for user choice
 	char choice;
-	while (true) {
+
+	// Error handing
+	for(;;) {
 		scanf("%c", &choice);
+		
+		// User entered yes
 		if (choice == 'y' || choice == 'Y') {
 			break;
 		}
+
+		// User entered no
 		else if (choice == 'n' || choice == 'N') {
 			return;
 		}
+
+		// Invalid input
 		else {
 			printf(RED"Invalid input\n"COLOR_RESET);
 		}
 	}
+
+	// File name
 	printf(GREEN"-Enter File Name-\n\n"COLOR_RESET);
-	char fileName[100];
-	while (true) {
+	char fileName[100] = "";
+
+	for (;;) {
 		scanf("%s", fileName);
+
 		if (strlen(fileName) > 0) {
 			if (fileName[strlen(fileName) - 1] == '\n') {
 				fileName[strlen(fileName) - 1] = '\0';
 			}
 			break;
 		}
+
+		// Check for valid file name
 		else {
 			printf(RED"Invalid input\n"COLOR_RESET);
 		}
 	}
+	// Write the output to a file
 	outputFile(output, fileName);
 }
 

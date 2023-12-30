@@ -1,6 +1,3 @@
-/*
-
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -20,11 +17,13 @@
 
 #pragma warning(disable : 4996)
 
-void printArray(int arr[], int size) {
-	// This function prints an array
+// This function prints an array
+void printArray(int* arr, int size) {
+
 	for (int i = 0; i < size; i++) {
 		printf("%2d ", arr[i]);
 	}
+	
 	printf("\n");
 }
 
@@ -107,6 +106,7 @@ int findIndex(int arr[], int value) {
 
 // Make a random string of specified length
 void makeRandomString(char* str, int length) {
+
 	for (int i = 0; i < length; i++) {
 		str[i] = convertToChar(rand() % 26);
 	}
@@ -116,10 +116,12 @@ void makeRandomString(char* str, int length) {
 void expandString(char** str) {
 	// This function expands the size of a string by 100 characters
 	char* temp = (char*)malloc((strlen(*str) + 100) * sizeof(char));
+
 	if (temp == NULL) {
-		printf("Memory allocation failed\n");
-		exit(1);
+		perror(RED"Unable to Allocate Memory\n"COLOR_RESET);
+		exit(EXIT_FAILURE);
 	}
+
 	strcpy(temp, *str);
 	//free(*str);
 	*str = temp;
@@ -132,15 +134,16 @@ void inputString(char** str) {
 	*str = (char*)malloc(100 * sizeof(char));
 
 	if (*str == NULL) {
-		printf("Memory allocation failed\n");
-		exit(1);
+		perror(RED"Unable to Allocate Memory\n"COLOR_RESET);
+		exit(EXIT_FAILURE);
 	}
 
 	/*printf("Press Enter twice to confirm input\n");
 	printf("Enter a string:\n");*/
 	char input;
 	int i = 0;
-	while (true) {
+
+	for (;;) {
 		if ((i + 1) % 100 == 0) {
 			(*str)[i] = '\0';
 			expandString(str);
@@ -165,29 +168,36 @@ void inputString(char** str) {
 	(*str)[i - 1] = '\0';
 }
 
+// This function takes input from a file
 void inputFile(char** str, char* fileName) {
-	// This function takes input from a file
+
 	FILE* fp = fopen(fileName, "r");
+	
 	if (fp == NULL) {
-		printf("File not found\n");
-		exit(1);
+		perror(RED"File Does Not Exist\n"COLOR_RESET);
+		exit(EXIT_FAILURE);
 	}
 
+	// Create a string for input
 	*str = (char*)malloc(100 * sizeof(char));
 
+	// Unable to allocate memory to string
 	if (*str == NULL) {
-		printf("Memory allocation failed\n");
-		exit(1);
+		perror(RED"Unable To Allocate Memory\n"COLOR_RESET);
+		exit(EXIT_FAILURE);
 	}
 
 	char input;
 	int i = 0;
-	while (true) {
+
+	for (;;) {
+		// Expand the buffer size
 		if ((i + 1) % 100 == 0) {
 			(*str)[i] = '\0';
 			expandString(str);
 		}
 
+		// Get input from file
 		input = fgetc(fp);
 
 		// Break loop with double enter
@@ -195,28 +205,42 @@ void inputFile(char** str, char* fileName) {
 			break;
 		}
 
+		// Put input into string
 		(*str)[i] = input;
 		i++;
 	}
+
+	
 	(*str)[i] = '\0';
+
+	// Check for empty file
 	if (i == 0) {
-		printf("File is empty\n");
-		exit(1);
+		perror(RED"File is Empty\n"COLOR_RESET);
+		exit(EXIT_FAILURE);
 	}
+
 	fclose(fp);
 }
 
+// This function prints the settings
 void printSettings(Settings settings) {
-	// This function prints the settings
+	// Print Rotors
 	printf("Rotors Used: ");
 	printArray(settings.rotorsUsed, 3);
+
+	// Print Positions for Rotors
 	printf("Rotor Positions: ");
 	printArray(settings.defaultPositions, 3);
+
+	// Print the Plugboard
 	printf("Plugboard: ");
+
 	for (int i = 0; i < 10; i++) {
 		printf("%c%c ", convertToChar(settings.plugBoard[i][0]), convertToChar(settings.plugBoard[i][1]));
 	}
+
 	printf("\n");
+	
 	printf("Rotors: \n");
 	for (int i = 0; i < 5; i++) {
 		printArray(settings.rotors[i], 26);
