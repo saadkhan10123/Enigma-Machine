@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <conio.h>
 #include <Windows.h>
 #include "Settings.h"
 
@@ -158,49 +159,50 @@ void printMenu() {
 int stringInputMenu() {
 	int option = 1;
 
-	printf(GREEN"-Select Method for String Input-\n\n"COLOR_RESET);
-	for (;;) {
-		
-		// Check for arrow key input
-		// Right or up
-		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
-			option++;
-			Sleep(150); // Input Delay
-		}
+	printf(GREEN"-Select Method for String Input-\n"COLOR_RESET);
 
-		// Left or down
-		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
-			option--;
-			Sleep(150); // Input Delay
+	for (;;) {
+		// Check for arrow key input
+		if (_kbhit()) {
+			int key = _getch();
+			switch (key) {
+			case 75: // Left arrow
+				option--;
+				Sleep(150); // Input Delay
+				break;
+			case 77: // Right arrow
+				option++;
+				Sleep(150); // Input Delay
+				break;
+			}
+
+			// Make sure options are within range
+			if (option > 2) {
+				option = 1;
+			}
+			if (option < 1) {
+				option = 2;
+			}
 		}
 
 		// Keep an arrow over the option currently selected
-		switch (option)	
-		{
+		switch (option) {
 		case 1:
 			printf(CYAN"\r> Enter String    Get String From File"COLOR_RESET);
 			break;
 		case 2:
 			printf(CYAN"\rEnter String    > Get String From File"COLOR_RESET);
 			break;
-		default:
-			// Make sure options within range
-			if (option > 2) {
-				option = 1;
-			}
-
-			if (option < 1) {
-				option = 2;
-			}
-
-			break;
 		}
+
 		// Break out of the loop when enter key is pressed
-		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+		if (_kbhit() && _getch() == 13) { // 13 is the ASCII code for Enter key
 			Sleep(300); // Input Delay
 			break;
 		}
+
 	}
+
 	// Clear the screen when enter is pressed
 	system("cls");
 

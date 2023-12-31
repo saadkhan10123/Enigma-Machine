@@ -232,9 +232,6 @@ void randomKey(Settings* settings) {
 
 // Get key directly from user
 void directKeyInput(Settings *settings) {
-	// Clear the input buffer
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF);
 	
 	char key[30] = " ";
 	char plug[21] = " ";
@@ -244,7 +241,7 @@ void directKeyInput(Settings *settings) {
 
 	for (;;) {
 		// Get user input
-		printf("Enter the Key: ");
+		printf(CYAN"Enter the Key: "COLOR_RESET);
 		scanf("%s", key);
 
 		uppercase(key);
@@ -304,7 +301,7 @@ void directKeyInput(Settings *settings) {
 
 		// Display message for success or failure
 		if (!keyValid) {
-			printf("\nEncryption Key is Invalid");
+			printf(RED"\nEncryption Key is Invalid\n"COLOR_RESET);
 			continue;
 		}
 
