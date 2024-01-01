@@ -89,6 +89,7 @@ void titleScreen()
 
 		// Exit title screen when enter pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			Sleep(300); // Input Delay
 			break;
 		}
@@ -109,12 +110,14 @@ void printMenu() {
 		// Check for arrow key input
 		// Right or up
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			option++;
 			Sleep(150); // Input Delay
 		}
 
 		// Left or down
 		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			option--;
 			Sleep(150); // Input Delay
 		}
@@ -145,6 +148,7 @@ void printMenu() {
 		}
 		// Break out of the loop when enter key is pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			Sleep(300); // Input Delay
 			break;
 		}
@@ -166,11 +170,15 @@ int stringInputMenu() {
 		if (_kbhit()) {
 			int key = _getch();
 			switch (key) {
+			
 			case 75: // Left arrow
+				MessageBeep(MB_OK); // Play Sound
 				option--;
 				Sleep(150); // Input Delay
 				break;
+			
 			case 77: // Right arrow
+				MessageBeep(MB_OK); // Play Sound
 				option++;
 				Sleep(150); // Input Delay
 				break;
@@ -197,6 +205,7 @@ int stringInputMenu() {
 
 		// Break out of the loop when enter key is pressed
 		if (_kbhit() && _getch() == 13) { // 13 is the ASCII code for Enter key
+			MessageBeep(MB_OK); // Play Sound
 			Sleep(300); // Input Delay
 			break;
 		}
@@ -252,12 +261,14 @@ void keyConfigurationType(Settings* settings) {
 		// Check for arrow key input
 		// Right or up
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8001 || GetAsyncKeyState(VK_UP) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			option++;
 			Sleep(150); // Input Delay
 		}
 
 		// Left or down
 		if (GetAsyncKeyState(VK_LEFT) & 0x8001 || GetAsyncKeyState(VK_DOWN) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			option--;
 			Sleep(150); // Input Delay
 		}
@@ -292,6 +303,7 @@ void keyConfigurationType(Settings* settings) {
 
 		// Break out of the loop when enter key is pressed
 		if (GetAsyncKeyState(VK_RETURN) & 0x8001) {
+			MessageBeep(MB_OK); // Play Sound
 			Sleep(300); // Input Delay
 			break;
 		}
@@ -299,10 +311,13 @@ void keyConfigurationType(Settings* settings) {
 	system("cls");
 
 	// Call function depending upon user choice
+	// Call function depending upon user choice
 	switch (option)	{
 		case 1:
 			// Manually set up encryption settings
+			// Manually set up encryption settings
 			manualConfiguration(settings);
+			break;
 			break;
 		case 2:
 			// Generate random encryption key
