@@ -10,6 +10,9 @@
 // This file is for debugging and testing purposes only
 // You don't need to know how it works :)
 
+
+void printSettings(Settings settings);
+
 void testEncryptDecrypt() {
 	Settings* settings = malloc(sizeof(Settings));
 	initializeRotorSettings(settings);
