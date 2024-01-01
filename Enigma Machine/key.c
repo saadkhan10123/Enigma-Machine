@@ -119,25 +119,26 @@ void inputPlugs(Settings* settings) {
 
 	// Array of plugs
 	char plug[21] = "";
+	bool isValid;
 
 	// Get input for plugs
 	for (;;) {
 		printf(GREEN"\n-Set Plug Configurations: "COLOR_RESET);
 		scanf("%s", plug);
 
+		isValid = true;
+		// Invalid Input
 		for (int i = 0; i < strlen(plug); i++) {
-
-			// Invalid Input
-			if (plug[i] < 'A' || plug[i] > 'z') {
+			if (!isalpha(plug[i])) {
 				printf(RED"Invalid Input\n"COLOR_RESET);
-				continue;
+				isValid = false;
 			}
 
 			// Check for repition
 			for (int j = i + 1; j < strlen(plug); j++) {
 				if (plug[i] == plug[j]) {
 					printf(RED"Enter Distinct Plugs\n"COLOR_RESET);
-					continue;
+					isValid = false;
 				}
 			}
 		}
@@ -155,6 +156,11 @@ void inputPlugs(Settings* settings) {
 			3. Number of plugs should be a multiple of 2
 		*/
 		// Exit loop if all conditions are valid
+
+		if (!isValid) {
+			continue;
+		}
+
 		break;
 
 	} 

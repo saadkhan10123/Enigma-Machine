@@ -59,7 +59,7 @@ void titleScreen()
 
 		// Time delay on new line to make it more stylish
 		if (*c == '\n') {
-			Sleep(10);
+			Sleep(150);
 		}
 	}
 
@@ -163,6 +163,7 @@ void printMenu() {
 
 // Menu for method of string input
 int stringInputMenu() {
+	fflush(stdin);
 	int option = 1;
 
 	printf(GREEN"--------------------------------\n"COLOR_RESET);
