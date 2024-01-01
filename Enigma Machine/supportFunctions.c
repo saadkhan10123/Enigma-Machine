@@ -17,9 +17,8 @@
 
 #pragma warning(disable : 4996)
 
-// This function prints an array
 void printArray(int* arr, int size) {
-
+	// This function prints an array
 	for (int i = 0; i < size; i++) {
 		printf("%2d ", arr[i]);
 	}
@@ -104,20 +103,12 @@ int findIndex(int arr[], int value) {
 	return -1;
 }
 
-// Make a random string of specified length
-void makeRandomString(char* str, int length) {
-
-	for (int i = 0; i < length; i++) {
-		str[i] = convertToChar(rand() % 26);
-	}
-	str[length] = '\0';
-}
-
 void expandString(char** str) {
 	// This function expands the size of a string by 100 characters
 	char* temp = (char*)malloc((strlen(*str) + 100) * sizeof(char));
 
 	if (temp == NULL) {
+		// Unable to allocate memory
 		perror(RED"Unable to Allocate Memory\n"COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
@@ -127,28 +118,27 @@ void expandString(char** str) {
 	*str = temp;
 }
 
-void inputString(char** str) {
-	fflush(stdin); // Clear the input buffer
-	
-	// This function takes input from the user
+void inputString(char** str) {	
+	// This function takes input from the user in the form of a string
 	*str = (char*)malloc(100 * sizeof(char));
 
 	if (*str == NULL) {
+		// Unable to allocate memory
 		perror(RED"Unable to Allocate Memory\n"COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
 
-	/*printf("Press Enter twice to confirm input\n");
-	printf("Enter a string:\n");*/
 	char input;
 	int i = 0;
 
 	for (;;) {
 		if ((i + 1) % 100 == 0) {
+			// Expand the buffer size
 			(*str)[i] = '\0';
 			expandString(str);
 		}
 
+		// Get input from user
 		input = getchar();
 
 		// Break loop with double enter
@@ -157,6 +147,7 @@ void inputString(char** str) {
 				break;
 			}
 			else if (i == 0) {
+				// If input is empty throw error
 				printf("Invalid input\n");
 				continue;
 			}
@@ -165,15 +156,16 @@ void inputString(char** str) {
 		(*str)[i] = input;
 		i++;
 	}
+	// Termmiate the string using '\0'
 	(*str)[i - 1] = '\0';
 }
 
-// This function takes input from a file
 void inputFile(char** str, char* fileName) {
-
+	// This function takes input from a file
 	FILE* fp = fopen(fileName, "r");
 	
 	if (fp == NULL) {
+		// Throw error if file not found
 		perror(RED"File Does Not Exist\n"COLOR_RESET);
 		exit(EXIT_FAILURE);
 	}
@@ -222,39 +214,16 @@ void inputFile(char** str, char* fileName) {
 	fclose(fp);
 }
 
-// This function prints the settings
-void printSettings(Settings settings) {
-	// Print Rotors
-	printf("Rotors Used: ");
-	printArray(settings.rotorsUsed, 3);
-
-	// Print Positions for Rotors
-	printf("Rotor Positions: ");
-	printArray(settings.defaultPositions, 3);
-
-	// Print the Plugboard
-	printf("Plugboard: ");
-
-	for (int i = 0; i < 10; i++) {
-		printf("%c%c ", convertToChar(settings.plugBoard[i][0]), convertToChar(settings.plugBoard[i][1]));
-	}
-
-	printf("\n");
-	
-	printf("Rotors: \n");
-	for (int i = 0; i < 5; i++) {
-		printArray(settings.rotors[i], 26);
-	}
-}
-
 void outputFile(char* str, char* fileName) {
 	// This function outputs to a file
 	FILE* fp = fopen(fileName, "w");
 	if (fp == NULL) {
+		// Throw error if file not found
 		printf("File not found\n");
 		exit(1);
 	}
 
+	// Print the string to the file
 	for (int i = 0; i < strlen(str); i++) {
 		fputc(str[i], fp);
 	}
