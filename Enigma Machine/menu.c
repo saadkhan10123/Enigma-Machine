@@ -361,6 +361,7 @@ void askInput(char** str) {
 		char fileName[100] = "";
 
 		for (;;) {
+			// Check for valid file name
 			scanf("%s", fileName);
 			if (strlen(fileName) > 0) {
 				if (fileName[strlen(fileName) - 1] == '\n') {
@@ -369,7 +370,6 @@ void askInput(char** str) {
 				break;
 			}
 
-			// Check for valid file name
 			else {
 				printf(RED"Invalid input\n"COLOR_RESET);
 			}
@@ -420,7 +420,7 @@ void askFileOutput(char* output) {
 
 	for (;;) {
 		scanf("%s", fileName);
-
+		// Check for valid file name
 		if (strlen(fileName) > 0) {
 			if (fileName[strlen(fileName) - 1] == '\n') {
 				fileName[strlen(fileName) - 1] = '\0';
@@ -428,7 +428,6 @@ void askFileOutput(char* output) {
 			break;
 		}
 
-		// Check for valid file name
 		else {
 			printf(RED"Invalid input\n"COLOR_RESET);
 		}
@@ -446,39 +445,62 @@ void startEncryption() {
 	// Get the key 
 	keyConfigurationType(settings);
 
+	// Initialize the Machine
 	initializeRotorSettings(settings);
 
+	// Get the input from the user
 	askInput(&str);
 
+	// Make a string to store the output
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
+
+	// Make the string uppercase
 	uppercase(str);
+
+	// Encrypt the string
 	encrypt(settings, str, output);
 	
-
+	// Print the output
 	printf(GREEN"Encrypted string: \n%s"COLOR_RESET, output);
 
 	printf("\n\n");
 
+	// Ask the user if he/she wants to save the output to a file
 	askFileOutput(output);
 
+	// Print the key
 	printKey(settings);
 }
 
 void startDecryption() {
 	// This function starts the decryption process
+	// Make a String
 	char* str = NULL;
 	Settings* settings = malloc(sizeof(Settings));
 
+	// Get the key
 	directKeyInput(settings);
+
+	// Initialize the Machine
 	initializeRotorSettings(settings);
 
+	// Get the input from the user
 	askInput(&str);
 
+	// Make a string to store the output
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
+
+	// Make the string uppercase
 	uppercase(str);
+
+	// Decrypt the string
 	decrypt(settings, str, output);
 
-	askFileOutput(output);
-
+	// Print the output
 	printf(CYAN"Decrypted string: \n%s\n"COLOR_RESET, output);
+
+	printf("\n\n");
+
+	// Ask the user if he/she wants to save the output to a file
+	askFileOutput(output);
 }

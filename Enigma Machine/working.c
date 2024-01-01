@@ -7,8 +7,6 @@ void rotateRotor(int* rotor);
 void initializeRotorSettings(Settings* settings) {
 	// This function initializes the rotor settings
 
-
-
 	// Initialize rotors
 	int rotorSettings[5][26] = {
 		{4, 10, 12, 5, 11, 6, 3, 16, 21, 25, 13, 19, 14, 22, 24, 7, 23, 20, 18, 15, 0, 8, 1, 17, 2, 9},
