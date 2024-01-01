@@ -32,7 +32,8 @@ void titleScreen()
 {
 	// ASCII Art for title
 	char title[] =
-		GREEN"    ______   _   _   _____    _____   __  __                   \n"
+		GREEN"_______________________________________________________________\n"
+		"    ______   _   _   _____    _____   __  __                   \n"
 		"   |  ____| | \\ | | |_   _|  / ____| |  \\/  |     /\\           \n"
 		"   | |__    |  \\| |   | |   | |  __  | \\  / |    /  \\          \n"
 		"   |  __|   | . ` |   | |   | | |_ | | |\\/| |   / /\\ \\         \n"
@@ -58,7 +59,7 @@ void titleScreen()
 
 		// Time delay on new line to make it more stylish
 		if (*c == '\n') {
-			Sleep(150);
+			Sleep(10);
 		}
 	}
 
@@ -103,8 +104,9 @@ void printMenu() {
 	fflush(stdin); // Clear the input buffer
 	
 	int option = 1;
-
-	printf(GREEN"-Select Your Option-\n\n"COLOR_RESET);
+	printf(GREEN"--------------------\n"COLOR_RESET);
+	printf(GREEN"-Select Your Option-\n"COLOR_RESET);
+	printf(GREEN"--------------------\n\n"COLOR_RESET);
 	for (;;) {
 		
 		// Check for arrow key input
@@ -163,7 +165,9 @@ void printMenu() {
 int stringInputMenu() {
 	int option = 1;
 
+	printf(GREEN"--------------------------------\n"COLOR_RESET);
 	printf(GREEN"-Select Method for String Input-\n"COLOR_RESET);
+	printf(GREEN"--------------------------------\n\n"COLOR_RESET);
 
 	for (;;) {
 		// Check for arrow key input
@@ -254,8 +258,11 @@ void keyConfigurationType(Settings* settings) {
 	fflush(stdin); // Clear the input buffer
 	
 	int option = 1;
-	printf(GREEN"-Choose Key Configuration Type-\n\n"COLOR_RESET);
-	
+
+	printf(GREEN"-------------------------------\n"COLOR_RESET);
+	printf(GREEN"-Choose Key Configuration Type-\n"COLOR_RESET);
+	printf(GREEN"-------------------------------\n\n"COLOR_RESET);
+
 	for (;;) {
 		
 		// Check for arrow key input
@@ -379,7 +386,9 @@ void askInput(char** str) {
 
 // Ask the user if he/she wants to write output to a file
 void askFileOutput(char* output) {
+	printf(GREEN"-----------------------------------------------\n"COLOR_RESET);
 	printf(GREEN"Do you want to save the output to a file? (y/n)\n"COLOR_RESET);
+	printf(GREEN"-----------------------------------------------\n"COLOR_RESET);
 
 	// Get input for user choice
 	char choice;
@@ -443,8 +452,9 @@ void startEncryption() {
 	char* output = malloc(sizeof(char) * (strlen(str) + 1));
 	uppercase(str);
 	encrypt(settings, str, output);
+	
 
-	printf("Encrypted string: \n%s", output);
+	printf(GREEN"Encrypted string: \n%s"COLOR_RESET, output);
 
 	printf("\n\n");
 
@@ -469,5 +479,5 @@ void startDecryption() {
 
 	askFileOutput(output);
 
-	printf("Decrypted string: \n%s\n", output);
+	printf(CYAN"Decrypted string: \n%s\n"COLOR_RESET, output);
 }
