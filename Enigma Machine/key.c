@@ -17,11 +17,6 @@
 // Reset Color
 #define COLOR_RESET "\033[0m"
 
-// Clears the input buffer
-void clearInput() {
-
-}
-
 void inputRotorsUsed(int* rotor) {
 	// Clear the input buffer
 	int c;
@@ -253,31 +248,34 @@ void directKeyInput(Settings *settings) {
 		uppercase(key);
 
 		bool rotorsValid = true;
-		// Validity of rotors in the key
+		// Validity of Rotors in the key
 		for (int i = 0; i < 3; i++) {
 			// Rotors used between 1 and 5
 			if (!(key[i] >= '1' && key[i] <= '5')) {
+				printf(RED"\nRotors Must Be Between 1 and 5"COLOR_RESET);
 				rotorsValid = false;
 				break;
 			}
 
 			// Check for repetition
-			if (key[i] == key[i + 1]) {
-
-				rotorsValid = false; // Not valid if rotors used are repeated
+			if (i < 2 && key[i] == key[i + 1]) {
+				printf(RED"\nRotors Must Be Distinct"COLOR_RESET);
+				rotorsValid = false;
 				break;
 			}
 		}
+
 
 		bool positionsValid = true;
 		// Validity of positions in the key
 		for (int i = 3; i < 9; i++) {
 			// Rotor position between 00 and 25
 			if (!(key[i] >= '0' && key[i] <= '2' && key[i + 1] >= '0' && key[i + 1] <= '9')) {
-
+				printf(RED"\nPositions Must Be Between 00 and 25"COLOR_RESET);
 				positionsValid = false;
 				break;
 			}
+
 			i++; // Skip the second digit of the two-digit number
 		}
 
@@ -285,14 +283,15 @@ void directKeyInput(Settings *settings) {
 		// Validity of plugs in the key
 		for (int i = 9; i < strlen(key); i++) {
 			// Plugs between A and Z
-			if (!(key[i] >= 'A' && key[i] <= 'Z')) {
+			if (!isalpha(key[i])) {
+				printf(RED"\nPlugs Can Only Be Alphabets"COLOR_RESET);
 				plugsValid = false;
 				break;
 			}
 
 			// Check for repetition
 			if (key[i] == key[i + 1]) {
-
+				printf(RED"\nPlugs Must Be Distinct"COLOR_RESET);
 				plugsValid = false; // Not valid if plugs are repeated
 				break;
 			}
@@ -302,6 +301,7 @@ void directKeyInput(Settings *settings) {
 
 		// Check if plugs are in pairs
 		if (strlen(key) % 2 == 0) {
+			printf(RED"\nPlugs Must Be in Pairs of 2"COLOR_RESET);
 			keyValid = false;
 		}
 

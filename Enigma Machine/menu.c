@@ -164,7 +164,10 @@ void printMenu() {
 // Menu for method of string input
 int stringInputMenu() {
 	int option = 1;
+	fflush(stdin);
+	
 	getchar(); // Clear the input buffer
+	getchar();
 
 	printf(GREEN"--------------------------------\n"COLOR_RESET);
 	printf(GREEN"-Select Method for String Input-\n"COLOR_RESET);

@@ -114,7 +114,6 @@ void expandString(char** str) {
 	}
 
 	strcpy(temp, *str);
-	//free(*str);
 	*str = temp;
 }
 
