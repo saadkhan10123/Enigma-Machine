@@ -297,6 +297,7 @@ void directKeyInput(Settings *settings) {
 			}
 		}
 
+		// AND condition for key validity
 		keyValid = rotorsValid && positionsValid && plugsValid;
 
 		// Check if plugs are in pairs
