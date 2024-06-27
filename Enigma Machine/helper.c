@@ -93,7 +93,7 @@ void printKey(Settings *settings) {
 	printf("\n");
 }
 
-int findIndex(int arr[], int value) {
+int findIndex(int* arr, int value) {
 	// This function finds the index of a value in an array
 	for (int i = 0; i < 26; i++) {
 		if (arr[i] == value) {

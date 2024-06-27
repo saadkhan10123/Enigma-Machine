@@ -132,7 +132,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="key.c" />
     <ClCompile Include="menu.c" />
-    <ClCompile Include="supportFunctions.c" />
+    <ClCompile Include="helper.c" />
     <ClCompile Include="test.c" />
     <ClCompile Include="working.c" />
   </ItemGroup>

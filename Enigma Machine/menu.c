@@ -96,6 +96,7 @@ void titleScreen()
 		}
 	}
 
+	// Clear Menu
 	system("cls");
 }
 

@@ -46,9 +46,6 @@ void testEncryptDecrypt() {
 	free(str);
 }
 
-void testKey() {
-
-}
 
 void testEncrypt() {
 	Settings *settings = malloc(sizeof(Settings));
@@ -64,14 +61,6 @@ void testEncrypt() {
 	uppercase(str);
 	encrypt(settings, str, output);
 	printf("Encrypted: %s\n", output);
-}
-
-void testDecrypt() {
-
-}
-
-void testEverything() {
-
 }
 
 void printSettings(Settings settings) {

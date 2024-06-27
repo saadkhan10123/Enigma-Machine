@@ -18,7 +18,7 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="supportFunctions.c">
+    <ClCompile Include="helper.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="encrypt.c">
