@@ -41,7 +41,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Settings.h">
+    <ClInclude Include="settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
