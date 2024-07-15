@@ -1,8 +1,7 @@
 /*
-	Muhammad Saad Khan 
-	Ali Ahmad
-	28-11-2023
-	Enigma Machine
+	Enigma Machine C
+	By Ali Ahmad &
+	Muhammad Saad Khan
 */
 #include <stdio.h>
 #include <stdlib.h>
