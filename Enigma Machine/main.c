@@ -13,7 +13,7 @@
 #pragma warning(disable:4996)
 #pragma warning(disable:6031)
 
-int main(void) {
+int main() {
 	// Title Screen and Main Menu
 	titleScreen();
 	printMenu();
