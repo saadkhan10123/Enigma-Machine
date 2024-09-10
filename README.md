@@ -5,7 +5,7 @@
 * Build and run project.
 
 ### Usage
-* Encrypt messages using a key, the key can either be automatically generated or manually created.
+* Encrypt messages using a key that can either be automatically generated or manually created.
 * Decrypt messages, remember to save the encryption key since you will need it for decryption.
 * Save encrypted/decrypted messages to a file so that they can be used later on.
 
