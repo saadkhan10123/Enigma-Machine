@@ -137,6 +137,7 @@
     <ClCompile Include="working.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="keyFunctions.h" />
     <ClInclude Include="settings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
