@@ -1,6 +1,7 @@
 #include <string.h>
-#include <ctype.h>
-#include "Settings.h"
+#include "encrypt.h"
+#include "helper.h"
+#include "hardware.h"
 
 int putThroughRotor(Settings* settings, int rotorNumber, int index) {
 	// This function puts a value through a rotor

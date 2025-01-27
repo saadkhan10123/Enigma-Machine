@@ -1,32 +1,24 @@
-/*
-	Enigma Machine C
-	By Ali Ahmad &
-	Muhammad Saad Khan
-*/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <time.h>
-#include "Settings.h"
+#include "menu.h"
 
 #pragma warning(disable:4996)
 #pragma warning(disable:6031)
 
-int main() {
-	// Title Screen and Main Menu
-	titleScreen();
-	printMenu();
+int main() 
+{
+	while (true) 
+	{
+		// Title Screen and Main Menu
+		titleScreen();
+		printMenu();
 
-	getchar();
+		// Clear the input buffer
+		getchar();
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF);
 
-	// Clear the input buffer
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF);
-
-	// Return back to title screen
-	system("cls");
-	main();
+		// Return back to title screen
+		system("cls");
+	}
 
 	return 0;
 }

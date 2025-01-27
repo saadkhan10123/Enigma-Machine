@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "Settings.h"
-
-void rotateRotor(int* rotor);
+#include "hardware.h"
 
 void initializeRotorSettings(Settings* settings) {
 	// This function initializes the rotor settings

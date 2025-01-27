@@ -1,19 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <Windows.h>
-#include <stdbool.h>
-#include "Settings.h"
-
-// Colored Text
-#define GREEN "\033[1;92m"
-#define RED "\033[1;91m"
-#define CYAN "\033[1;96m" 
-#define YELLOW "\033[1;93m" 
-
-// Reset Color
-#define COLOR_RESET "\033[0m"
+#include "helper.h"
+#include "colours.h"
 
 #pragma warning(disable : 4996)
 
@@ -22,7 +8,7 @@ void printArray(int* arr, int size) {
 	for (int i = 0; i < size; i++) {
 		printf("%2d ", arr[i]);
 	}
-	
+
 	printf("\n");
 }
 
@@ -58,7 +44,7 @@ void printString(char* str) {
 }
 
 // Print out the encryption key
-void printKey(Settings *settings) {
+void printKey(Settings* settings) {
 
 	printf(GREEN"-Encryption Key: "COLOR_RESET);
 
@@ -86,7 +72,7 @@ void printKey(Settings *settings) {
 		for (int j = 0; j < 2; j++) {
 			printf(GREEN"%c"COLOR_RESET, convertToChar(settings->plugBoard[i][j]));
 			Sleep(50);
-			
+
 		}
 	}
 
@@ -117,7 +103,7 @@ void expandString(char** str) {
 	*str = temp;
 }
 
-void inputString(char** str) {	
+void inputString(char** str) {
 	// This function takes input from the user in the form of a string
 	*str = (char*)malloc(100 * sizeof(char));
 
@@ -162,7 +148,7 @@ void inputString(char** str) {
 void inputFile(char** str, char* fileName) {
 	// This function takes input from a file
 	FILE* fp = fopen(fileName, "r");
-	
+
 	if (fp == NULL) {
 		// Throw error if file not found
 		perror(RED"File Does Not Exist\n"COLOR_RESET);
@@ -201,7 +187,7 @@ void inputFile(char** str, char* fileName) {
 		i++;
 	}
 
-	
+
 	(*str)[i] = '\0';
 
 	// Check for empty file

@@ -1,35 +1,17 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
+#include "menu.h"
+#include "key.h"
+#include "colours.h"
+#include "encrypt.h"
+#include "decrypt.h"
+
 #include <conio.h>
-#include <Windows.h>
-#include "Settings.h"
 
 #pragma warning(disable:4996)
 #pragma warning(disable:6031)
 
-// Colored Text
-#define GREEN "\033[1;92m"
-#define RED "\033[1;91m"
-#define CYAN "\033[1;96m" 
-#define YELLOW "\033[1;93m" 
-
-// Reset Color
-#define COLOR_RESET "\033[0m"
-
-// Function prototypes
-void startEncryption();
-void startDecryption();
-void printMenu();
-void useMenuOption(int option);
-void generateKey();
-
 // Title screen for the program
-void titleScreen()
-{
+void titleScreen() {
 	// ASCII Art for title
 	char title[] =
 		GREEN"_______________________________________________________________\n"

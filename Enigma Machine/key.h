@@ -1,15 +1,19 @@
 #pragma once
-#include <stdlib.h>
+
 #include <stdio.h>
-#include "Settings.h"
+#include <stdlib.h>
+#include <string.h>
+#pragma once
 
-// all functions in key.c
+#include <stdbool.h>
+#include <ctype.h>
+#include "settings.h"
 
-void inputRotorsUsed(int rotors[]);
-void inputRotorPositions(int positions[]);
+void inputRotorsUsed(int* rotor);
+void inputRotorPositions(int* position);
 void createPairs(char* plug, Settings* settings);
 void inputPlugs(Settings* settings);
+
 void manualConfiguration(Settings* settings);
 void randomKey(Settings* settings);
 void directKeyInput(Settings* settings);
-

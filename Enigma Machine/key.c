@@ -1,21 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include "Settings.h"
+#include "helper.h"
+#include "key.h"
+#include "colours.h"
+#include <time.h>
 
 #pragma warning(disable:4996)
 #pragma warning(disable:6031)
-
-// Colored Text
-#define GREEN "\033[1;92m"
-#define RED "\033[1;91m"
-#define CYAN "\033[1;96m" 
-#define YELLOW "\033[1;93m" 
-
-// Reset Color
-#define COLOR_RESET "\033[0m"
 
 void inputRotorsUsed(int* rotor) {
 	// Clear the input buffer

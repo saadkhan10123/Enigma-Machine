@@ -1,5 +1,7 @@
 #include <string.h>
-#include "Settings.h"
+#include "decrypt.h"
+#include "helper.h"
+#include "hardware.h"
 
 int decryptThroughRotor(Settings* settings, int rotorNumber, int index) {
 	// This function puts a value through a rotor to decrypt it

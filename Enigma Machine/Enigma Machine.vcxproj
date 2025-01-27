@@ -129,14 +129,20 @@
   <ItemGroup>
     <ClCompile Include="decrypt.c" />
     <ClCompile Include="encrypt.c" />
+    <ClCompile Include="hardware.c" />
+    <ClCompile Include="helper.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="key.c" />
     <ClCompile Include="menu.c" />
-    <ClCompile Include="helper.c" />
-    <ClCompile Include="test.c" />
-    <ClCompile Include="working.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="colours.h" />
+    <ClInclude Include="decrypt.h" />
+    <ClInclude Include="encrypt.h" />
+    <ClInclude Include="hardware.h" />
+    <ClInclude Include="helper.h" />
+    <ClInclude Include="key.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="settings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
