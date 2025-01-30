@@ -1,8 +1,6 @@
 #pragma once
-#include<stdio.h>
 
-// Settings Struct
-
+// Machine configuration
 typedef struct {
 	int rotors[5][26];
 	int reflector[26];
