@@ -35,14 +35,6 @@ void uppercase(char* text) {
 	}
 }
 
-void printString(char* str) {
-	// This function prints a string
-	for (int i = 0; i < strlen(str); i++) {
-		printf("%c", str[i]);
-	}
-	printf("\n");
-}
-
 // Print out the encryption key
 void printKey(Settings* settings) {
 

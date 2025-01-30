@@ -3,7 +3,7 @@
 #include "helper.h"
 #include "hardware.h"
 
-int putThroughRotor(Settings* settings, int rotorNumber, int index) {
+int encryptThroughRotor(Settings* settings, int rotorNumber, int index) {
 	// This function puts a value through a rotor
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
 	return settings->rotors[rotorUsed][index];
@@ -26,7 +26,7 @@ void encrypt(Settings* settings, char* str, char* output) {
 
 		// Put through rotors
 		for (j = 0; j < 3; j++) {
-			index = putThroughRotor(settings, j, index);
+			index = encryptThroughRotor(settings, j, index);
 		}
 
 		// Put through reflector
@@ -34,7 +34,7 @@ void encrypt(Settings* settings, char* str, char* output) {
 
 		// Put through rotors again
 		for (j = 2; j >= 0; j--) {
-			index = putThroughRotor(settings, j, index);
+			index = encryptThroughRotor(settings, j, index);
 		}
 		// Rotate rotors
 		rotateRotors(settings, i);

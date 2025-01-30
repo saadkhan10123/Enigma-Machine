@@ -15,8 +15,6 @@ char convertToChar(int i);
 
 void uppercase(char* text);
 
-void printString(char* str);
-
 // Print out the encryption key
 void printKey(Settings* settings);
 
