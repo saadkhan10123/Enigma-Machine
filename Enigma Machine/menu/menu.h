@@ -1,8 +1,8 @@
 #pragma once
 
-#include "helper.h"
-#include "hardware.h"
-#include "settings.h"
+#include "../common/helper.h"
+#include "../encryption/hardware.h"
+#include "../common/settings.h"
 
 void startEncryption();
 void startDecryption();

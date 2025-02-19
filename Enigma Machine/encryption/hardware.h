@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "settings.h"
+#include "../common/settings.h"
 
 void rotateRotor(int* rotor);
 void initializeRotorSettings(Settings* settings);

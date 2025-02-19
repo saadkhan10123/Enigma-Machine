@@ -1,15 +1,15 @@
 #include <string.h>
-#include "decrypt.h"
-#include "helper.h"
+#include "encrypt.h"
+#include "../common/helper.h"
 #include "hardware.h"
 
-int decryptThroughRotor(Settings* settings, int rotorNumber, int index) {
-	// This function puts a value through a rotor to decrypt it
+int encryptThroughRotor(Settings* settings, int rotorNumber, int index) {
+	// This function puts a value through a rotor
 	int rotorUsed = settings->rotorsUsed[rotorNumber];
-	return findIndex(settings->rotors[rotorUsed], index);
+	return settings->rotors[rotorUsed][index];
 }
 
-void decrypt(Settings* settings, char* str, char* output) {
+void encrypt(Settings* settings, char* str, char* output) {
 	// Iterate through the string
 	for (int i = 0; i < strlen(str); i++) {
 		// Convert the character to an index
@@ -24,20 +24,21 @@ void decrypt(Settings* settings, char* str, char* output) {
 		// Put through plugboard
 		index = putThroughPlugBoard(settings, index);
 
-		// Put through rotors to decrypt
+		// Put through rotors
 		for (j = 0; j < 3; j++) {
-			index = decryptThroughRotor(settings, j, index);
+			index = encryptThroughRotor(settings, j, index);
 		}
 
 		// Put through reflector
 		index = putThroughReflector(settings, index);
 
-		// Put through rotors again to decrypt
+		// Put through rotors again
 		for (j = 2; j >= 0; j--) {
-			index = decryptThroughRotor(settings, j, index);
+			index = encryptThroughRotor(settings, j, index);
 		}
 		// Rotate rotors
 		rotateRotors(settings, i);
+
 
 		// Put through plugboard again
 		index = putThroughPlugBoard(settings, index);

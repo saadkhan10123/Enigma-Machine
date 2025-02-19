@@ -127,23 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="decrypt.c" />
-    <ClCompile Include="encrypt.c" />
-    <ClCompile Include="hardware.c" />
-    <ClCompile Include="helper.c" />
+    <ClCompile Include="encryption\decrypt.c" />
+    <ClCompile Include="encryption\encrypt.c" />
+    <ClCompile Include="encryption\hardware.c" />
+    <ClCompile Include="common\helper.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="key.c" />
-    <ClCompile Include="menu.c" />
+    <ClCompile Include="key\key.c" />
+    <ClCompile Include="menu\menu.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="colours.h" />
-    <ClInclude Include="decrypt.h" />
-    <ClInclude Include="encrypt.h" />
-    <ClInclude Include="hardware.h" />
-    <ClInclude Include="helper.h" />
-    <ClInclude Include="key.h" />
-    <ClInclude Include="menu.h" />
-    <ClInclude Include="settings.h" />
+    <ClInclude Include="common\colours.h" />
+    <ClInclude Include="encryption\decrypt.h" />
+    <ClInclude Include="encryption\encrypt.h" />
+    <ClInclude Include="encryption\hardware.h" />
+    <ClInclude Include="common\helper.h" />
+    <ClInclude Include="key\key.h" />
+    <ClInclude Include="menu\menu.h" />
+    <ClInclude Include="common\settings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

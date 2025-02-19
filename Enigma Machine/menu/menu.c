@@ -1,9 +1,9 @@
 
 #include "menu.h"
-#include "key.h"
-#include "colours.h"
-#include "encrypt.h"
-#include "decrypt.h"
+#include "../key/key.h"
+#include "../common/colours.h"
+#include "../encryption/encrypt.h"
+#include "../encryption/decrypt.h"
 
 #include <conio.h>
 

@@ -7,7 +7,7 @@
 
 #include <stdbool.h>
 #include <ctype.h>
-#include "settings.h"
+#include "../common/settings.h"
 
 void inputRotorsUsed(int* rotor);
 void inputRotorPositions(int* position);

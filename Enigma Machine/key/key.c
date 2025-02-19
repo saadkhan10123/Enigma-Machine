@@ -1,6 +1,6 @@
-#include "helper.h"
+#include "../common/helper.h"
 #include "key.h"
-#include "colours.h"
+#include "../common/colours.h"
 #include <time.h>
 
 #pragma warning(disable:4996)
